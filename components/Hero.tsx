@@ -72,6 +72,13 @@ export default function Hero() {
   const lineRef   = useRef<HTMLDivElement>(null)
   const [slide, setSlide] = useState(0)
 
+  useEffect(() => {
+    const setVh = () => {
+      document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`)
+    }
+    setVh()
+  }, [])
+
   const next = useCallback(() => setSlide(s => (s + 1) % neighborhoods.length), [])
   const prev = useCallback(() => setSlide(s => (s - 1 + neighborhoods.length) % neighborhoods.length), [])
 
@@ -98,7 +105,8 @@ export default function Hero() {
 
   return (
     <section
-      className="relative min-h-[100svh] flex flex-col justify-end px-6 md:px-16 pb-16 md:pb-24 overflow-hidden"
+      className="relative flex flex-col justify-end px-6 md:px-16 pb-16 md:pb-24 overflow-hidden"
+      style={{ minHeight: 'calc(var(--vh, 1svh) * 100)' }}
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
     >
@@ -243,13 +251,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Scroll hint — bottom right */}
-      <div
-        className="absolute bottom-8 right-6 md:right-16 flex flex-col items-center gap-2 z-[2]"
-        style={{ animation: 'fade-up 0.8s cubic-bezier(0.32,0.72,0,1) 1.6s both' }}
-      >
-        <div className="w-[1px] h-12 bg-gradient-to-b from-gold/40 to-transparent animate-pulse" />
-      </div>
+
     </section>
   )
 }
