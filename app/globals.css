@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap');
+
+:root {
+  --font-cormorant: 'Playfair Display', Georgia, serif;
+  --font-dm-sans: 'Jost', system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; }
+
+/* Custom cursor active — hide native on ALL elements */
+.custom-cursor *,
+.custom-cursor *::before,
+.custom-cursor *::after { cursor: none !important; }
+
+body {
+  background: #080808;
+  color: #F5EFE0;
+  font-family: 'Jost', system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Grain — fixed, pointer-events-none */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9990;
+  pointer-events: none;
+  opacity: 0.028;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* Gold shimmer */
+.gold-shimmer {
+  background: linear-gradient(90deg, #C9A84C 0%, #E2C97E 35%, #C9A84C 55%, #9A7A2E 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 4s linear infinite;
+}
+
+.fade-up-anim {
+  animation: fade-up 0.9s cubic-bezier(0.32,0.72,0,1) both;
+}
+
+/* RTL */
+[dir="rtl"] { font-family: 'Noto Naskh Arabic', 'Jost', system-ui, sans-serif; }
+
+/* Scroll reveal — from bottom */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  filter: blur(5px);
+  transition:
+    opacity 0.9s cubic-bezier(0.32,0.72,0,1),
+    transform 0.9s cubic-bezier(0.32,0.72,0,1),
+    filter 0.9s cubic-bezier(0.32,0.72,0,1);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); filter: blur(0); }
+
+/* Scroll reveal — from top */
+.reveal-top {
+  opacity: 0;
+  transform: translateY(-28px);
+  filter: blur(4px);
+  transition:
+    opacity 0.85s cubic-bezier(0.32,0.72,0,1),
+    transform 0.85s cubic-bezier(0.32,0.72,0,1),
+    filter 0.85s cubic-bezier(0.32,0.72,0,1);
+}
+.reveal-top.visible { opacity: 1; transform: translateY(0); filter: blur(0); }
+
+/* Word reveal — clip from bottom */
+@keyframes word-reveal {
+  from { transform: translateY(115%) skewY(4deg); opacity: 0; }
+  to   { transform: translateY(0) skewY(0deg);    opacity: 1; }
+}
+.word-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-bottom: 0.06em;
+  margin-right: 0.22em;
+}
+.word-mask:last-child {
+  margin-right: 0;
+}
+.word-inner {
+  display: inline-block;
+  animation: word-reveal 0.85s cubic-bezier(0.32,0.72,0,1) both;
+}
+
+/* Shimmer animation */
+@keyframes shimmer {
+  from { background-position: -200% center; }
+  to   { background-position:  200% center; }
+}
+
+/* Fade-up animation */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); filter: blur(6px); }
+  to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
+}
+
+/* Marquee animations */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes marquee-reverse {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+.marquee-run         { animation: marquee         20s linear infinite; }
+.marquee-run-reverse { animation: marquee-reverse 20s linear infinite; }
+
+/* Gold hairline */
+.gold-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #C9A84C, transparent);
+  transition: width 1.2s cubic-bezier(0.32,0.72,0,1);
+}

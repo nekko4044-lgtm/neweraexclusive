@@ -1,0 +1,78 @@
+{
+  "nav": {
+    "about": "About",
+    "services": "Services",
+    "why": "Why Us",
+    "contact": "Contact"
+  },
+  "hero": {
+    "eyebrow": "Dubai · Interior Design",
+    "headline1": "From Vision",
+    "headline2": "to Perfection",
+    "sub": "Turnkey interior design & renovation in the UAE. Over 20 years of expertise.",
+    "cta": "Start Your Project"
+  },
+  "about": {
+    "eyebrow": "Our Story",
+    "headline": "Over 20 Years of Excellence",
+    "body": "For over 20 years we have been crafting interiors that transcend time.\nOur team brings together architects, designers and engineers with international experience and education from Europe's leading design schools.\nWe manage the full cycle — from concept and engineering to construction, furnishing and final handover.\nFor us, an interior is not just design — it is an investment in quality of life, comfort and the owner's status.",
+    "stat1": "Projects Completed",
+    "stat1desc": "across the UAE",
+    "stat2": "Years of Expertise",
+    "stat2desc": "in interior design",
+    "stat3": "Years in Dubai",
+    "stat3desc": "UAE market experience",
+    "nda": "By client agreement, all project photography is confidential. Portfolio available upon request."
+  },
+  "services": {
+    "eyebrow": "What We Do",
+    "headline": "Everything, End to End",
+    "s1title": "Turnkey Renovation",
+    "s1body": "End-to-end renovation management. We handle every contractor, timeline, and detail.",
+    "s2title": "Interior Design",
+    "s2body": "Concept development, 3D visualisation, material selection and design supervision.",
+    "s3title": "AC & Climate Systems",
+    "s3body": "Supply, installation and commissioning of AC, ventilation and climate control systems.",
+    "s4title": "Smart Home",
+    "s4body": "Full home automation — lighting, climate, security and AV in one seamless interface.",
+    "s5title": "Furniture & Decor",
+    "s5body": "Premium sourcing of exclusive furniture, materials and décor from leading global suppliers.",
+    "s6title": "Parametric Design",
+    "s6body": "Custom parametric furniture and bespoke architectural elements crafted with precision.",
+    "s7title": "Pre-Sale & Handover Prep",
+    "s7body": "Property preparation for sale or handover — snagging, finishing and final punch list.",
+    "s8title": "Permits & Documentation",
+    "s8body": "All approvals, permits and contracts — fully managed from start to completion."
+  },
+  "why": {
+    "eyebrow": "Why Choose Us",
+    "headline": "The New Era Difference",
+    "w1title": "Turnkey Delivery",
+    "w1body": "One point of contact. Zero stress. We manage every contractor, supplier, and timeline.",
+    "w2title": "UAE Market Expertise",
+    "w2body": "4 years on the Dubai market. We know local regulations, suppliers, and what truly works.",
+    "w3title": "Premium Quality",
+    "w3body": "We work only with verified craftsmen and certified materials for results that last decades.",
+    "w4title": "On-Time Promise",
+    "w4body": "Transparent deadlines. Regular updates. No surprises — only results."
+  },
+  "contact": {
+    "eyebrow": "Get In Touch",
+    "headline": "Request a Personal Proposal",
+    "sub": "Tell us about your project. We will prepare an individual solution that takes into account the architecture of your space and your wishes.",
+    "address": "Office 101, Al Zarouni Business Centre, Al Barsha, Sheikh Zayed Road, Dubai, UAE.",
+    "name": "Your Name",
+    "phone": "Phone / WhatsApp",
+    "message": "Share your project idea",
+    "send": "Get a Proposal",
+    "or": "or reach us directly on",
+    "whatsapp": "WhatsApp"
+  },
+  "footer": {
+    "copy": "© 2026 New Era Interior Design. Dubai, UAE."
+  },
+  "districts": {
+    "eyebrow": "Where We Work",
+    "heading": "Areas We Operate In"
+  }
+}
