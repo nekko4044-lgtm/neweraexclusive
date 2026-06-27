@@ -66,6 +66,18 @@ body::before {
 }
 .reveal.visible { opacity: 1; transform: translateY(0); filter: blur(0); }
 
+/* Subtle reveal for cards and smaller elements */
+.reveal-subtle {
+  opacity: 0;
+  transform: translateY(16px);
+  filter: blur(3px);
+  transition:
+    opacity 0.7s cubic-bezier(0.32,0.72,0,1),
+    transform 0.7s cubic-bezier(0.32,0.72,0,1),
+    filter 0.7s cubic-bezier(0.32,0.72,0,1);
+}
+.reveal-subtle.visible { opacity: 1; transform: translateY(0); filter: blur(0); }
+
 /* Scroll reveal — from top */
 .reveal-top {
   opacity: 0;
@@ -121,6 +133,13 @@ body::before {
 }
 .marquee-run         { animation: marquee         20s linear infinite; }
 .marquee-run-reverse { animation: marquee-reverse 20s linear infinite; }
+
+/* Hover-only scale for social buttons (prevents unwanted scale on touch) */
+@media (hover: hover) and (pointer: fine) {
+  .social-btn-icon:hover {
+    transform: scale(1.1);
+  }
+}
 
 /* Gold hairline — animate via scaleX to avoid layout thrash */
 .gold-line {

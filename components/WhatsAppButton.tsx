@@ -34,7 +34,7 @@ function SocialBtn({
       </span>
 
       {/* Icon button */}
-      <div className="w-14 h-14 rounded-full bg-ink border border-gold/40 flex items-center justify-center shadow-[0_4px_24px_rgba(201,168,76,0.15)] transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-110 group-hover:bg-gold/10 group-hover:border-gold/70 group-hover:shadow-[0_8px_32px_rgba(201,168,76,0.25)] active:scale-95">
+      <div className="social-btn-icon w-14 h-14 rounded-full bg-ink border border-gold/40 flex items-center justify-center shadow-[0_4px_24px_rgba(201,168,76,0.15)] transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:bg-gold/10 group-hover:border-gold/70 group-hover:shadow-[0_8px_32px_rgba(201,168,76,0.25)] active:scale-95">
         {children}
       </div>
     </a>

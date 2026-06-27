@@ -114,7 +114,8 @@ export default function Contact() {
                 <button
                   type="submit"
                   disabled={status === 'loading'}
-                  className="group w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-gold hover:bg-gold-light disabled:opacity-60 text-ink font-body font-medium text-sm px-8 py-4 rounded-full transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.97]"
+                  className="group w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-gold hover:bg-gold-light disabled:opacity-60 text-ink font-body font-medium text-sm px-8 py-4 rounded-full active:scale-[0.97]"
+                  style={{ transition: 'background-color 200ms ease-out, opacity 200ms ease-out, transform 100ms ease-out' }}
                 >
                   {status === 'loading' && (
                     <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none">
