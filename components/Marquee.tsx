@@ -66,7 +66,7 @@ function MarqueeTrack({ items, reverse = false }: { items: string[]; reverse?: b
               'font-display text-[13px] tracking-[0.22em] px-3 select-none',
               item === '✦'
                 ? 'text-gold/60 text-[8px] mx-1'
-                : 'italic text-gold/50'
+                : 'italic text-gold/70'
             )}
             style={item !== '✦' ? { textShadow: '0 0 24px rgba(201,168,76,0.25)' } : undefined}
           >

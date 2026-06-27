@@ -147,15 +147,6 @@ export default function Hero() {
         />
       </div>
 
-      {/* Est. top-right */}
-      <div
-        className="absolute top-28 right-6 md:right-16 text-right z-[2]"
-        style={{ animation: 'fade-up 0.7s cubic-bezier(0.32,0.72,0,1) 1.4s both' }}
-      >
-        <div className="font-body text-[9px] uppercase tracking-[0.35em] text-gold/30 mb-0.5">Est.</div>
-        <div className="font-display text-3xl font-light text-gold/20 italic">2022</div>
-      </div>
-
       {/* Main content */}
       <div className="relative z-[2] max-w-5xl">
 

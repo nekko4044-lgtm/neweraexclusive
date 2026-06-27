@@ -94,7 +94,7 @@ export default function VideoZone({ children }: { children: React.ReactNode }) {
 
         {/* Readability overlay */}
         <div className="absolute inset-0 pointer-events-none"
-          style={{ background: 'rgba(8,8,8,0.75)' }} />
+          style={{ background: 'rgba(8,8,8,0.4)' }} />
 
         {/* Top fade from previous section */}
         <div className="absolute top-0 inset-x-0 h-40 pointer-events-none"
@@ -103,6 +103,11 @@ export default function VideoZone({ children }: { children: React.ReactNode }) {
         {/* Bottom fade to next section */}
         <div className="absolute bottom-0 inset-x-0 h-40 pointer-events-none"
           style={{ background: 'linear-gradient(to top, #080808, transparent)' }} />
+
+        {/* Scroll hint */}
+        <p className="absolute bottom-8 left-1/2 -translate-x-1/2 font-body text-[11px] uppercase tracking-[0.25em] text-cream/50 pointer-events-none select-none whitespace-nowrap">
+          Scroll to explore
+        </p>
       </div>
 
       {/* Content scrolls over the canvas */}

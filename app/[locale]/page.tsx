@@ -1,4 +1,5 @@
 import { unstable_setRequestLocale } from 'next-intl/server'
+import Cursor from '@/components/Cursor'
 import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
 import Marquee from '@/components/Marquee'
@@ -37,6 +38,7 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
         suppressHydrationWarning
       />
       <main>
+        <Cursor />
         <Navbar />
         <Hero />
         <Marquee />

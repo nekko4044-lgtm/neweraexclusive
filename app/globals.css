@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap');
+/* Removed: Cormorant Garamond and DM Sans — not referenced in any font-family declaration */
 
 :root {
   --font-cormorant: 'Playfair Display', Georgia, serif;
@@ -122,9 +122,10 @@ body::before {
 .marquee-run         { animation: marquee         20s linear infinite; }
 .marquee-run-reverse { animation: marquee-reverse 20s linear infinite; }
 
-/* Gold hairline */
+/* Gold hairline — animate via scaleX to avoid layout thrash */
 .gold-line {
   height: 1px;
   background: linear-gradient(90deg, transparent, #C9A84C, transparent);
-  transition: width 1.2s cubic-bezier(0.32,0.72,0,1);
+  transform-origin: left center;
+  transition: transform 1.2s cubic-bezier(0.32,0.72,0,1);
 }

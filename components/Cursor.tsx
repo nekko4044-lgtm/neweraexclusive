@@ -35,6 +35,9 @@ export default function Cursor() {
 
     function lerp(a: number, b: number, t: number) { return a + (b - a) * t }
 
+    // Base ring size is 36px; hover scale = 56/36 ≈ 1.556
+    const BASE_RING = 18 // half of 36px, used as offset from center
+
     function tick() {
       const dot = dotRef.current
       const ring = ringRef.current
@@ -44,11 +47,8 @@ export default function Cursor() {
       rx = lerp(rx, mx, 0.11)
       ry = lerp(ry, my, 0.11)
       if (ring) {
-        const size = hovering ? 56 : 36
-        const offset = size / 2
-        ring.style.transform = `translate(${rx - offset}px, ${ry - offset}px)`
-        ring.style.width = `${size}px`
-        ring.style.height = `${size}px`
+        const scale = hovering ? 1.556 : 1
+        ring.style.transform = `translate(${rx - BASE_RING}px, ${ry - BASE_RING}px) scale(${scale})`
         ring.style.borderColor = hovering ? 'rgba(201,168,76,0.7)' : 'rgba(201,168,76,0.3)'
         ring.style.backgroundColor = hovering ? 'rgba(201,168,76,0.05)' : 'transparent'
       }
@@ -75,11 +75,11 @@ export default function Cursor() {
         ref={ringRef}
         className="fixed top-0 left-0 z-[9998] rounded-full border pointer-events-none"
         style={{
-          willChange: 'transform, width, height',
-          transition: 'width 0.35s cubic-bezier(0.32,0.72,0,1), height 0.35s cubic-bezier(0.32,0.72,0,1), border-color 0.3s, background-color 0.3s',
+          willChange: 'transform',
+          transition: 'scale 0.35s cubic-bezier(0.32,0.72,0,1), border-color 0.3s, background-color 0.3s',
           width: '36px', height: '36px',
           borderColor: 'rgba(201,168,76,0.3)',
-          transform: 'translate(-200px, -200px)',
+          transform: 'translate(-200px, -200px) scale(1)',
         }}
       />
     </>
