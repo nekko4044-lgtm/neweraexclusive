@@ -126,46 +126,32 @@ export default function SmartToiletModelClient({ modelId }: { modelId: string })
             <div className="w-12 h-[1px] bg-gold/40" />
 
             {/* Specs grid */}
-            <div className="grid grid-cols-2 gap-px bg-white/[0.05] rounded-xl overflow-hidden border border-white/[0.05]">
-              {model.dimensions !== '—' && (
-                <div className="bg-[#0F0F0F] p-4 flex flex-col gap-1">
-                  <span className="font-body text-[10px] uppercase tracking-[0.25em] text-cream/30">
-                    {locale === 'ru' ? 'Размеры' : locale === 'ar' ? 'الأبعاد' : 'Dimensions'}
-                  </span>
-                  <span className="font-body text-[14px] text-cream/80">{model.dimensions}</span>
+            {(() => {
+              const specs: { label: string; value: string }[] = []
+              if (model.dimensions !== '—') specs.push({ label: locale === 'ru' ? 'Размеры' : locale === 'ar' ? 'الأبعاد' : 'Dimensions', value: model.dimensions })
+              if (model.functions > 0) specs.push({ label: locale === 'ru' ? 'Функции' : locale === 'ar' ? 'الوظائف' : 'Functions', value: String(model.functions) })
+              specs.push({ label: locale === 'ru' ? 'Система воды' : locale === 'ar' ? 'نظام المياه' : 'Water system', value: waterSystemLabel[model.waterSystem] })
+              if (model.waterPressure) specs.push({ label: locale === 'ru' ? 'Давление воды' : locale === 'ar' ? 'ضغط الماء' : 'Water pressure', value: model.waterPressure })
+              if (model.ipRating) specs.push({ label: locale === 'ru' ? 'Защита' : locale === 'ar' ? 'الحماية' : 'Protection', value: model.ipRating })
+              const isOdd = specs.length % 2 !== 0
+              return (
+                <div className="grid grid-cols-2 gap-px bg-white/[0.05] rounded-xl overflow-hidden border border-white/[0.05]">
+                  {specs.map((spec, i) => {
+                    const isLast = i === specs.length - 1
+                    const spanFull = isLast && isOdd
+                    return (
+                      <div
+                        key={spec.label}
+                        className={`bg-[#0F0F0F] p-4 flex flex-col gap-1 ${spanFull ? 'col-span-2 items-center text-center' : ''}`}
+                      >
+                        <span className="font-body text-[10px] uppercase tracking-[0.25em] text-cream/30">{spec.label}</span>
+                        <span className="font-body text-[14px] text-cream/80">{spec.value}</span>
+                      </div>
+                    )
+                  })}
                 </div>
-              )}
-              {model.functions > 0 && (
-                <div className="bg-[#0F0F0F] p-4 flex flex-col gap-1">
-                  <span className="font-body text-[10px] uppercase tracking-[0.25em] text-cream/30">
-                    {locale === 'ru' ? 'Функции' : locale === 'ar' ? 'الوظائف' : 'Functions'}
-                  </span>
-                  <span className="font-body text-[14px] text-cream/80">{model.functions}</span>
-                </div>
-              )}
-              <div className="bg-[#0F0F0F] p-4 flex flex-col gap-1">
-                <span className="font-body text-[10px] uppercase tracking-[0.25em] text-cream/30">
-                  {locale === 'ru' ? 'Система воды' : locale === 'ar' ? 'نظام المياه' : 'Water system'}
-                </span>
-                <span className="font-body text-[14px] text-cream/80">{waterSystemLabel[model.waterSystem]}</span>
-              </div>
-              {model.waterPressure && (
-                <div className="bg-[#0F0F0F] p-4 flex flex-col gap-1">
-                  <span className="font-body text-[10px] uppercase tracking-[0.25em] text-cream/30">
-                    {locale === 'ru' ? 'Давление воды' : locale === 'ar' ? 'ضغط الماء' : 'Water pressure'}
-                  </span>
-                  <span className="font-body text-[14px] text-cream/80">{model.waterPressure}</span>
-                </div>
-              )}
-              {model.ipRating && (
-                <div className="bg-[#0F0F0F] p-4 flex flex-col gap-1">
-                  <span className="font-body text-[10px] uppercase tracking-[0.25em] text-cream/30">
-                    {locale === 'ru' ? 'Защита' : locale === 'ar' ? 'الحماية' : 'Protection'}
-                  </span>
-                  <span className="font-body text-[14px] text-cream/80">{model.ipRating}</span>
-                </div>
-              )}
-            </div>
+              )
+            })()}
 
             {/* Color selector */}
             {model.colors.length > 1 && (

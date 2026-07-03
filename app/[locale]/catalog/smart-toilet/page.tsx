@@ -136,10 +136,6 @@ function ModelCard({
           </div>
         )}
 
-        {/* Status */}
-        <span className="mt-auto pt-1 font-body text-[10px] uppercase tracking-[0.25em] text-gold/50">
-          {t('cta_status')}
-        </span>
       </div>
     </Link>
   )
@@ -153,7 +149,9 @@ export default function SmartToiletPage() {
 
   const [filter, setFilter] = useState<'all' | 'floor' | 'wall' | 'bidet'>('all')
 
-  const lineRef = useRef<HTMLDivElement>(null)
+  const bgOverlayRef = useRef<HTMLDivElement>(null)
+  const heroTitleRef = useRef<HTMLDivElement>(null)
+  const contentRef = useReveal(100)
 
   // Restore filter from sessionStorage on mount
   useEffect(() => {
@@ -162,18 +160,23 @@ export default function SmartToiletPage() {
   }, [])
 
   useEffect(() => {
-    const el = lineRef.current
-    if (!el) return
-    el.style.transform = 'translateY(-100%)'
-    const raf = requestAnimationFrame(() => {
-      el.style.transition = 'transform 1.6s cubic-bezier(0.32,0.72,0,1)'
-      el.style.transform = 'translateY(0)'
-    })
-    return () => cancelAnimationFrame(raf)
+    window.scrollTo(0, 0)
+    if (bgOverlayRef.current) bgOverlayRef.current.style.opacity = '0.35'
+    if (heroTitleRef.current) {
+      heroTitleRef.current.style.opacity = '1'
+      heroTitleRef.current.style.transform = 'translateY(0)'
+    }
+    const handler = () => {
+      const progress = Math.min(1, window.scrollY / (window.innerHeight * 0.8))
+      if (bgOverlayRef.current) bgOverlayRef.current.style.opacity = String(0.35 + progress * 0.53)
+      if (heroTitleRef.current) {
+        heroTitleRef.current.style.opacity = String(1 - progress * 1.5)
+        heroTitleRef.current.style.transform = `translateY(${-progress * 40}px)`
+      }
+    }
+    window.addEventListener('scroll', handler, { passive: true })
+    return () => window.removeEventListener('scroll', handler)
   }, [])
-
-  const eyebrowRef = useReveal(200)
-  const contentRef = useReveal(100)
 
   const categoryName = t('categories.smart_toilet.name')
   const eyebrowText = t('categories.smart_toilet.eyebrow')
@@ -184,60 +187,57 @@ export default function SmartToiletPage() {
   }
 
   return (
-    <main className="min-h-[100dvh] bg-ink overflow-x-hidden">
-      {/* ── Hero ────────────────────────────────────────────────────────────── */}
-      <section className="relative min-h-[70vh] overflow-hidden bg-stone">
-        <div className="absolute inset-0">
-          <DotPattern id="dots-st-hero" />
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-ink/60 via-ink/40 to-ink" />
-        <DomeGhost />
+    <div className="relative">
+      {/* Fixed background */}
+      <div className="fixed top-0 left-0 w-full h-screen overflow-hidden z-0">
+        <img
+          src="/catalog/flexible-marbles/bg.jpg"
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div ref={bgOverlayRef} className="absolute inset-0 bg-ink pointer-events-none" style={{ opacity: 0.35 }} />
+        <div className="absolute inset-0 bg-gradient-to-b from-ink/60 via-transparent to-transparent pointer-events-none" />
 
-        {/* Vertical gold line */}
+        {/* Hero title */}
         <div
-          className="absolute ltr:left-6 rtl:right-6 md:ltr:left-14 md:rtl:right-14 top-0 w-[1px] h-[58%] overflow-hidden pointer-events-none z-[2]"
-          aria-hidden="true"
+          ref={heroTitleRef}
+          className="absolute inset-0 flex flex-col justify-end px-6 md:px-16 pb-16 md:pb-24"
+          style={{ willChange: 'opacity, transform' }}
         >
-          <div ref={lineRef} className="w-full h-full bg-gold/30" style={{ transform: 'translateY(-100%)' }} />
-        </div>
+          <nav className="absolute top-28 md:top-32 ltr:left-6 rtl:right-6 md:ltr:left-16 md:rtl:right-16 flex items-center gap-2 font-body text-[14px] uppercase tracking-[0.2em] text-cream/40" style={{ textShadow: '0 1px 8px rgba(0,0,0,0.8)' }}>
+            <Link href={`/${locale}/catalog`} className="hover:text-gold/80 transition-colors duration-300">
+              {t('breadcrumb_root')}
+            </Link>
+            <span className="text-cream/25">/</span>
+            <span className="text-cream/70">{categoryName}</span>
+          </nav>
 
-        {/* Breadcrumb */}
-        <nav
-          className="absolute top-28 md:top-32 ltr:left-6 rtl:right-6 md:ltr:left-16 md:rtl:right-16 z-10 flex items-center gap-2 font-body text-[11px] uppercase tracking-[0.3em] text-cream/30"
-          aria-label="Breadcrumb"
-        >
-          <Link href={`/${locale}/catalog`} className="hover:text-gold/60 transition-colors duration-300">
-            {t('breadcrumb_root')}
-          </Link>
-          <span className="text-cream/20">/</span>
-          <span className="text-cream/50">{categoryName}</span>
-        </nav>
-
-        {/* Hero content */}
-        <div className="relative z-[3] flex flex-col justify-end min-h-[70vh] pb-20 px-6 md:px-16">
           <div className="flex flex-col gap-5">
-            <div ref={eyebrowRef} className="reveal flex items-center gap-3">
+            <div className="flex items-center gap-3">
               <div className="w-7 h-[1px] bg-gold/50" />
-              <span className="font-body text-[11px] uppercase tracking-[0.3em] text-gold/60">
-                {eyebrowText}
-              </span>
+              <span className="font-body text-[11px] uppercase tracking-[0.3em] text-gold/60">{eyebrowText}</span>
             </div>
-            <h1>
+            <h1 style={{ textShadow: '0 2px 24px rgba(0,0,0,0.95), 0 6px 48px rgba(0,0,0,0.7)', wordSpacing: '-0.12em' }}>
               <WordReveal
                 text={categoryName}
                 delayStart={0.35}
-                className="block text-[clamp(2.6rem,7vw,5.5rem)] font-light text-cream font-display leading-[0.92]"
+                className="block text-[clamp(3.4rem,10vw,8rem)] font-light text-cream font-display leading-[0.88]"
               />
             </h1>
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* ── Filter + Grid ────────────────────────────────────────────────────── */}
-      <section
-        ref={contentRef}
-        className="reveal py-16 md:py-24 px-6 md:px-16 max-w-[1400px] mx-auto"
-      >
+      {/* Spacer */}
+      <div className="h-screen" />
+
+      {/* Scrollable content */}
+      <div className="relative z-10">
+        {/* ── Filter + Grid ──────────────────────────────────────────────────── */}
+        <section
+          ref={contentRef}
+          className="reveal py-16 md:py-24 px-6 md:px-16 max-w-[1400px] mx-auto"
+        >
         {/* Filter buttons */}
         <div className="flex gap-2 md:gap-3 mb-12 md:mb-16 flex-wrap">
           {(['all', 'floor', 'wall', 'bidet'] as const).map((f) => (
@@ -273,7 +273,8 @@ export default function SmartToiletPage() {
             </div>
           )
         })()}
-      </section>
-    </main>
+        </section>
+      </div>
+    </div>
   )
 }

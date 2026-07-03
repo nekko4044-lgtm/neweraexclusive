@@ -202,6 +202,25 @@ export default function CatalogPage() {
     return () => cancelAnimationFrame(raf)
   }, [])
 
+  // Scroll-driven overlay darkening + title fade
+  const overlayRef = useRef<HTMLDivElement>(null)
+  const titleRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const handleScroll = () => {
+      const overlay = overlayRef.current
+      const title = titleRef.current
+      if (!overlay) return
+      const progress = Math.min(1, window.scrollY / (window.innerHeight * 0.4))
+      overlay.style.opacity = String(progress * 0.7)
+      if (title) {
+        title.style.opacity = String(1 - progress * 1.5)
+        title.style.transform = `translateY(${-progress * 40}px)`
+      }
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   // Eyebrow reveal
   const eyebrowRef = useReveal(200)
 
@@ -231,7 +250,7 @@ export default function CatalogPage() {
       slug: 'smart-toilet',
       eyebrow: t('categories.smart_toilet.eyebrow'),
       name: t('categories.smart_toilet.name'),
-      imageSrc: '/catalog/smart-toilet/01.jpeg',
+      imageSrc: '/catalog/smart-toilet/cullinan.jpeg',
       rowIndex: 1,
     },
     {
@@ -249,145 +268,121 @@ export default function CatalogPage() {
   ]
 
   return (
-    <main className="min-h-[100dvh] bg-ink overflow-x-hidden">
-      {/* ── Hero ────────────────────────────────────────────────────────────── */}
-      <section className="relative min-h-[55vh] bg-ink overflow-hidden flex flex-col justify-end px-6 md:px-16 pb-16 md:pb-24">
+    <div className="relative">
+      {/* ── Fixed video background — always behind everything ── */}
+      <div className="fixed top-0 left-0 w-full h-screen overflow-hidden z-0">
+        {/* Desktop video */}
+        <video
+          autoPlay muted loop playsInline
+          className="absolute inset-0 w-full h-full object-cover hidden md:block"
+        >
+          <source src="/videos/hero-desktop.mp4" type="video/mp4" />
+        </video>
+        {/* Mobile video */}
+        <video
+          autoPlay muted loop playsInline
+          className="absolute inset-0 w-full h-full object-cover block md:hidden"
+        >
+          <source src="/videos/hero-mobile.mp4" type="video/mp4" />
+        </video>
+
+        {/* Scroll-driven darkening overlay */}
+        <div
+          ref={overlayRef}
+          className="absolute inset-0 bg-ink pointer-events-none"
+          style={{ opacity: 0 }}
+        />
+
+        {/* Permanent bottom gradient for text legibility */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{ background: 'linear-gradient(to top, rgba(8,8,8,0.8) 0%, rgba(8,8,8,0.15) 45%, transparent 70%)' }}
+        />
+
         {/* Architectural grid */}
-        <svg className="absolute inset-0 w-full h-full pointer-events-none z-[0]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+        <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-60" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern id="hero-grid" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse">
               <path d="M 80 0 L 0 0 0 80" fill="none" stroke="#C9A84C" strokeWidth="0.3" strokeOpacity="0.07" />
             </pattern>
-            <pattern id="hero-dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-              <circle cx="1" cy="1" r="0.8" fill="#F5EFE0" fillOpacity="0.03" />
-            </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#hero-grid)" />
-          <rect width="100%" height="100%" fill="url(#hero-dots)" />
-        </svg>
-
-        {/* Film grain */}
-        <svg className="absolute inset-0 w-full h-full pointer-events-none z-[0] opacity-[0.035]" aria-hidden="true">
-          <filter id="catalog-hero-noise">
-            <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
-            <feColorMatrix type="saturate" values="0" />
-          </filter>
-          <rect width="100%" height="100%" filter="url(#catalog-hero-noise)" />
         </svg>
 
         {/* Gold halo */}
         <div
-          className="absolute pointer-events-none z-[0]"
+          className="absolute pointer-events-none"
           aria-hidden="true"
           style={{
-            bottom: '15%',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            width: '70vw',
-            height: '45vh',
+            bottom: '15%', left: '50%', transform: 'translateX(-50%)',
+            width: '70vw', height: '45vh',
             background: 'radial-gradient(ellipse at center, rgba(201,168,76,0.06) 0%, rgba(201,168,76,0.02) 40%, transparent 70%)',
           }}
         />
 
         {/* Vertical gold line */}
         <div
-          className="absolute ltr:left-6 rtl:right-6 md:ltr:left-14 md:rtl:right-14 top-0 w-[1px] h-[58%] overflow-hidden pointer-events-none z-[1]"
+          className="absolute ltr:left-6 rtl:right-6 md:ltr:left-14 md:rtl:right-14 top-0 w-[1px] h-[58%] overflow-hidden pointer-events-none"
           aria-hidden="true"
         >
+          <div ref={lineRef} className="w-full h-full bg-gold/30" style={{ transform: 'translateY(-100%)' }} />
+        </div>
+
+        {/* Hero content — title at bottom */}
+        <div className="absolute inset-0 flex flex-col justify-end px-6 md:px-16 pb-16 md:pb-24">
           <div
-            ref={lineRef}
-            className="w-full h-full bg-gold/30"
-            style={{ transform: 'translateY(-100%)' }}
-          />
-        </div>
-
-        {/* Dome ghost */}
-        <DomeGhost />
-
-        {/* Hero content */}
-        <div className="relative z-[2] flex flex-col gap-5 pt-32 md:pt-40">
-          {/* Eyebrow */}
-          <div ref={eyebrowRef} className="reveal flex items-center gap-3">
-            <div className="w-7 h-[1px] bg-gold/50" />
-            <span className="font-body text-[11px] uppercase tracking-[0.3em] text-gold/60">
-              {t('eyebrow')}
-            </span>
-          </div>
-
-          {/* H1 */}
-          <h1 className="flex flex-col gap-1">
-            <WordReveal
-              text={t('hero_line1')}
-              delayStart={0.35}
-              className="block text-[clamp(2.6rem,11.5vw,9rem)] font-light text-cream/90 font-display leading-[0.92]"
-            />
-            <WordReveal
-              text={t('hero_line2')}
-              delayStart={0.55}
-              className="block text-[clamp(2.6rem,11.5vw,9rem)] italic text-gold font-display leading-[0.92]"
-            />
-          </h1>
-        </div>
-      </section>
-
-      {/* ── Category grid ────────────────────────────────────────────────────── */}
-      <section className="py-16 md:py-24 px-4 md:px-8 max-w-[1600px] mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-3">
-          {/* Row 1 — три маленькие карточки */}
-          <div className="col-span-1 md:col-span-4 aspect-[4/3] md:aspect-square">
-            <CategoryCard
-              slug={categories[2].slug}
-              locale={locale}
-              name={categories[2].name}
-              subEyebrow={categories[2].eyebrow}
-              revealDelay={rowDelays[1][0]}
-              imageSrc={categories[2].imageSrc}
-            />
-          </div>
-          <div className="col-span-1 md:col-span-4 aspect-[4/3] md:aspect-square">
-            <CategoryCard
-              slug={categories[3].slug}
-              locale={locale}
-              name={categories[3].name}
-              subEyebrow={categories[3].eyebrow}
-              revealDelay={rowDelays[1][1]}
-              imageSrc={categories[3].imageSrc}
-            />
-          </div>
-          <div className="col-span-1 md:col-span-4 aspect-[4/3] md:aspect-square">
-            <CategoryCard
-              slug={categories[4].slug}
-              locale={locale}
-              name={categories[4].name}
-              subEyebrow={categories[4].eyebrow}
-              revealDelay={rowDelays[1][2]}
-              imageSrc={categories[4].imageSrc}
-            />
-          </div>
-
-          {/* Row 2 — две большие карточки */}
-          <div className="col-span-1 md:col-span-7 aspect-[4/3] md:aspect-[16/10]">
-            <CategoryCard
-              slug={categories[0].slug}
-              locale={locale}
-              name={categories[0].name}
-              subEyebrow={categories[0].eyebrow}
-              revealDelay={rowDelays[0][0]}
-              imageSrc={categories[0].imageSrc}
-            />
-          </div>
-          <div className="col-span-1 md:col-span-5 aspect-[4/3] md:aspect-[16/10]">
-            <CategoryCard
-              slug={categories[1].slug}
-              locale={locale}
-              name={categories[1].name}
-              subEyebrow={categories[1].eyebrow}
-              revealDelay={rowDelays[0][1]}
-              imageSrc={categories[1].imageSrc}
-            />
+            ref={titleRef}
+            className="flex flex-col gap-5 transition-none will-change-[opacity,transform]"
+          >
+            <div ref={eyebrowRef} className="reveal flex items-center gap-3">
+              <div className="w-7 h-[1px] bg-gold/50" />
+              <span className="font-body text-[11px] uppercase tracking-[0.3em] text-gold/60">
+                {t('eyebrow')}
+              </span>
+            </div>
+            <h1 className="flex flex-col gap-1">
+              <WordReveal
+                text={t('hero_line1')}
+                delayStart={0.35}
+                className="block text-[clamp(2.6rem,11.5vw,9rem)] font-light text-cream/90 font-display leading-[0.92]"
+              />
+              <WordReveal
+                text={t('hero_line2')}
+                delayStart={0.55}
+                className="block text-[clamp(2.6rem,11.5vw,9rem)] italic text-gold font-display leading-[0.92]"
+              />
+            </h1>
           </div>
         </div>
-      </section>
-    </main>
+      </div>
+
+      {/* ── Spacer — scroll room before categories appear ── */}
+      <div className="h-screen" />
+
+      {/* ── Categories — slides over fixed video ── */}
+      <div className="relative z-10">
+        <section className="pt-8 pb-24 md:pb-32 px-4 md:px-8 max-w-[1600px] mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-3">
+            {/* Row 1 — три маленькие карточки */}
+            <div className="col-span-1 md:col-span-4 aspect-[4/3] md:aspect-square">
+              <CategoryCard slug={categories[2].slug} locale={locale} name={categories[2].name} subEyebrow={categories[2].eyebrow} revealDelay={rowDelays[1][0]} imageSrc={categories[2].imageSrc} />
+            </div>
+            <div className="col-span-1 md:col-span-4 aspect-[4/3] md:aspect-square">
+              <CategoryCard slug={categories[3].slug} locale={locale} name={categories[3].name} subEyebrow={categories[3].eyebrow} revealDelay={rowDelays[1][1]} imageSrc={categories[3].imageSrc} />
+            </div>
+            <div className="col-span-1 md:col-span-4 aspect-[4/3] md:aspect-square">
+              <CategoryCard slug={categories[4].slug} locale={locale} name={categories[4].name} subEyebrow={categories[4].eyebrow} revealDelay={rowDelays[1][2]} imageSrc={categories[4].imageSrc} />
+            </div>
+            {/* Row 2 — две большие карточки */}
+            <div className="col-span-1 md:col-span-7 aspect-[4/3] md:aspect-[16/10]">
+              <CategoryCard slug={categories[0].slug} locale={locale} name={categories[0].name} subEyebrow={categories[0].eyebrow} revealDelay={rowDelays[0][0]} imageSrc={categories[0].imageSrc} />
+            </div>
+            <div className="col-span-1 md:col-span-5 aspect-[4/3] md:aspect-[16/10]">
+              <CategoryCard slug={categories[1].slug} locale={locale} name={categories[1].name} subEyebrow={categories[1].eyebrow} revealDelay={rowDelays[0][1]} imageSrc={categories[1].imageSrc} />
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
   )
 }
