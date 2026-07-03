@@ -96,7 +96,7 @@ export default function SmartToiletModelClient({ modelId }: { modelId: string })
 
           {/* ── LEFT: Image ─────────────────────────────────────────────────── */}
           <div className="lg:col-span-7 lg:sticky lg:top-28">
-            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-stone/40">
+            <div className="relative aspect-square rounded-2xl overflow-hidden bg-stone/40">
               <img
                 key={currentImage}
                 src={currentImage}
@@ -104,30 +104,6 @@ export default function SmartToiletModelClient({ modelId }: { modelId: string })
                 className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
               />
             </div>
-
-            {/* Color thumbnails — if model has multiple colors */}
-            {model.colors.length > 1 && (
-              <div className="mt-4 flex gap-3 flex-wrap">
-                {model.colors.map(color => (
-                  <button
-                    key={color.id}
-                    onClick={() => setSelectedColor(color)}
-                    className={`relative flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all duration-300 ${
-                      selectedColor?.id === color.id
-                        ? 'border-gold'
-                        : 'border-white/10 hover:border-white/30'
-                    }`}
-                    title={color.label}
-                  >
-                    <img
-                      src={color.imageSrc}
-                      alt={color.label}
-                      className="absolute inset-0 w-full h-full object-cover"
-                    />
-                  </button>
-                ))}
-              </div>
-            )}
           </div>
 
           {/* ── RIGHT: Details ──────────────────────────────────────────────── */}

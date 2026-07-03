@@ -145,82 +145,22 @@ function ModelCard({
   )
 }
 
-function AccordionSection({
-  id,
-  label,
-  models,
-  isOpen,
-  onToggle,
-  locale,
-  t,
-}: {
-  id: string
-  label: string
-  models: SmartToiletModel[]
-  isOpen: boolean
-  onToggle: () => void
-  locale: string
-  t: ReturnType<typeof useTranslations>
-}) {
-  return (
-    <div>
-      {/* Header */}
-      <button
-        onClick={onToggle}
-        className="w-full flex items-center justify-between py-6 md:py-8 group text-left"
-      >
-        <div className="flex items-center gap-4">
-          <span className="font-display text-[clamp(1.3rem,3vw,2rem)] font-light text-cream group-hover:text-gold transition-colors duration-300">
-            {label}
-          </span>
-          <span className="font-body text-[11px] text-cream/30 tracking-wider">
-            {models.length}
-          </span>
-        </div>
-        {/* Chevron */}
-        <div
-          className={`w-9 h-9 rounded-full border border-white/15 flex items-center justify-center transition-all duration-500 group-hover:border-gold/40 ${
-            isOpen ? 'rotate-180 border-gold/40 bg-gold/[0.08]' : ''
-          }`}
-        >
-          <svg width="13" height="8" viewBox="0 0 13 8" fill="none">
-            <path
-              d="M1 1.5L6.5 6.5L12 1.5"
-              stroke={isOpen ? '#C9A84C' : 'rgba(245,239,224,0.4)'}
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </div>
-      </button>
-
-      {/* Collapsible grid */}
-      <div
-        className={`overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] ${
-          isOpen ? 'max-h-[9999px] opacity-100 pb-12' : 'max-h-0 opacity-0'
-        }`}
-      >
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
-          {models.map((model) => (
-            <ModelCard key={model.id} model={model} locale={locale} t={t} />
-          ))}
-        </div>
-      </div>
-    </div>
-  )
-}
-
 // ─── Page ──────────────────────────────────────────────────────────────────────
 
 export default function SmartToiletPage() {
   const t = useTranslations('catalog')
   const locale = useLocale()
 
-  const [filter, setFilter] = useState<'all' | 'floor' | 'wall'>('all')
-  const [openSections, setOpenSections] = useState<Record<string, boolean>>({})
+  const [filter, setFilter] = useState<'all' | 'floor' | 'wall' | 'bidet'>('all')
 
   const lineRef = useRef<HTMLDivElement>(null)
+
+  // Restore filter from sessionStorage on mount
+  useEffect(() => {
+    const saved = sessionStorage.getItem('smartToiletFilter') as 'all' | 'floor' | 'wall' | 'bidet' | null
+    if (saved) setFilter(saved)
+  }, [])
+
   useEffect(() => {
     const el = lineRef.current
     if (!el) return
@@ -238,8 +178,9 @@ export default function SmartToiletPage() {
   const categoryName = t('categories.smart_toilet.name')
   const eyebrowText = t('categories.smart_toilet.eyebrow')
 
-  function toggleSection(id: string) {
-    setOpenSections((prev) => ({ ...prev, [id]: !prev[id] }))
+  function handleFilterChange(f: 'all' | 'floor' | 'wall' | 'bidet') {
+    setFilter(f)
+    sessionStorage.setItem('smartToiletFilter', f)
   }
 
   return (
@@ -292,17 +233,17 @@ export default function SmartToiletPage() {
         </div>
       </section>
 
-      {/* ── Filter + Accordion ───────────────────────────────────────────────── */}
+      {/* ── Filter + Grid ────────────────────────────────────────────────────── */}
       <section
         ref={contentRef}
         className="reveal py-16 md:py-24 px-6 md:px-16 max-w-[1400px] mx-auto"
       >
         {/* Filter buttons */}
         <div className="flex gap-2 md:gap-3 mb-12 md:mb-16 flex-wrap">
-          {(['all', 'floor', 'wall'] as const).map((f) => (
+          {(['all', 'floor', 'wall', 'bidet'] as const).map((f) => (
             <button
               key={f}
-              onClick={() => setFilter(f)}
+              onClick={() => handleFilterChange(f)}
               className={`px-5 py-2.5 rounded-full font-body text-[12px] uppercase tracking-[0.25em] transition-all duration-300 border ${
                 filter === f
                   ? 'bg-gold/15 border-gold text-gold'
@@ -313,31 +254,25 @@ export default function SmartToiletPage() {
                 ? t('smart_toilet_filter_all')
                 : f === 'floor'
                 ? t('smart_toilet_filter_floor')
-                : t('smart_toilet_filter_wall')}
+                : f === 'wall'
+                ? t('smart_toilet_filter_wall')
+                : t('smart_toilet_filter_bidet')}
             </button>
           ))}
         </div>
 
-        {/* Sections — accordion when filter = 'all', flat grid otherwise */}
-        {filter === 'all' && (
-          <div className="flex flex-col gap-0 divide-y divide-white/[0.06]">
-            <AccordionSection id="floor" label={t('smart_toilet_section_floor')} models={floorModels} isOpen={!!openSections['floor']} onToggle={() => toggleSection('floor')} locale={locale} t={t} />
-            <AccordionSection id="wall" label={t('smart_toilet_section_wall')} models={wallModels} isOpen={!!openSections['wall']} onToggle={() => toggleSection('wall')} locale={locale} t={t} />
-            <AccordionSection id="bidet" label={t('smart_toilet_section_bidet')} models={bidetModels} isOpen={!!openSections['bidet']} onToggle={() => toggleSection('bidet')} locale={locale} t={t} />
-          </div>
-        )}
-
-        {filter === 'floor' && (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
-            {floorModels.map(model => <ModelCard key={model.id} model={model} locale={locale} t={t} />)}
-          </div>
-        )}
-
-        {filter === 'wall' && (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
-            {wallModels.map(model => <ModelCard key={model.id} model={model} locale={locale} t={t} />)}
-          </div>
-        )}
+        {/* Models grid */}
+        {(() => {
+          const models = filter === 'floor' ? floorModels
+            : filter === 'wall' ? wallModels
+            : filter === 'bidet' ? bidetModels
+            : [...floorModels, ...wallModels, ...bidetModels]
+          return (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+              {models.map(model => <ModelCard key={model.id} model={model} locale={locale} t={t} />)}
+            </div>
+          )
+        })()}
       </section>
     </main>
   )
