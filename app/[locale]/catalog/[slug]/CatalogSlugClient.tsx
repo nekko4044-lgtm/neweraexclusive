@@ -534,7 +534,7 @@ export default function CatalogSlugClient({ slug }: { slug: string }) {
   return (
     <div className="relative">
       {/* Fixed background */}
-      <div className="fixed top-0 left-0 w-full h-screen overflow-hidden z-0">
+      <div className="fixed top-0 left-0 w-full h-[100svh] overflow-hidden z-0">
         <img
           src="/catalog/flexible-marbles/bg.jpg"
           alt=""
@@ -583,7 +583,7 @@ export default function CatalogSlugClient({ slug }: { slug: string }) {
         </div>
 
         {/* Spacer — pushes content below the fixed viewport */}
-        <div className="h-screen" />
+        <div className="h-[100svh]" />
 
         {/* Scrollable content — floats over the fixed bg */}
         <div className="relative z-10">

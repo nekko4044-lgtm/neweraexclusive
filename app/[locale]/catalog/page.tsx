@@ -270,7 +270,7 @@ export default function CatalogPage() {
   return (
     <div className="relative">
       {/* ── Fixed video background — always behind everything ── */}
-      <div className="fixed top-0 left-0 w-full h-screen overflow-hidden z-0">
+      <div className="fixed top-0 left-0 w-full h-[100svh] overflow-hidden z-0">
         {/* Desktop video */}
         <video
           autoPlay muted loop playsInline
@@ -357,7 +357,7 @@ export default function CatalogPage() {
       </div>
 
       {/* ── Spacer — scroll room before categories appear ── */}
-      <div className="h-screen" />
+      <div className="h-[100svh]" />
 
       {/* ── Categories — slides over fixed video ── */}
       <div className="relative z-10">

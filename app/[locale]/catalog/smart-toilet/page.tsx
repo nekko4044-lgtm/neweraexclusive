@@ -189,7 +189,7 @@ export default function SmartToiletPage() {
   return (
     <div className="relative">
       {/* Fixed background */}
-      <div className="fixed top-0 left-0 w-full h-screen overflow-hidden z-0">
+      <div className="fixed top-0 left-0 w-full h-[100svh] overflow-hidden z-0">
         <img
           src="/catalog/flexible-marbles/bg.jpg"
           alt=""
@@ -229,7 +229,7 @@ export default function SmartToiletPage() {
       </div>
 
       {/* Spacer */}
-      <div className="h-screen" />
+      <div className="h-[100svh]" />
 
       {/* Scrollable content */}
       <div className="relative z-10">
