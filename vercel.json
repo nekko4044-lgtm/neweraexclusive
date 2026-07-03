@@ -1,6 +1,9 @@
 {
   "redirects": [
     { "source": "/", "destination": "/en/catalog/", "permanent": false },
-    { "source": "/catalog", "destination": "/en/catalog/", "permanent": false }
+    { "source": "/catalog", "destination": "/en/catalog/", "permanent": false },
+    { "source": "/ru", "destination": "/ru/catalog/", "permanent": false },
+    { "source": "/ar", "destination": "/ar/catalog/", "permanent": false },
+    { "source": "/en", "destination": "/en/catalog/", "permanent": false }
   ]
 }
