@@ -123,6 +123,7 @@
     "smart_toilet_filter_all": "Все",
     "smart_toilet_filter_floor": "Напольные",
     "smart_toilet_filter_wall": "Настенные",
+    "smart_toilet_filter_bidet": "Умные биде-крышки",
     "smart_toilet_section_floor": "Напольные",
     "smart_toilet_section_wall": "Настенные",
     "smart_toilet_section_bidet": "Умные крышки-биде",
@@ -182,11 +183,7 @@
     "smart_toilet_model_y99gb_desc": "600×365×490 мм · 27 функций · Настенная",
     "smart_toilet_model_y59gb_name": "Y59GB",
     "smart_toilet_model_y59gb_desc": "600×390×430 мм · 26 функций · Настенная",
-    "smart_toilet_model_j07a_name": "J-07A",
-    "smart_toilet_model_j07a_desc": "680×420×500 мм · Умная крышка-биде · Материал: PP",
-    "smart_toilet_model_j08v_name": "J-08V",
-    "smart_toilet_model_j08v_desc": "515×390×120 мм · Умная крышка-биде",
-    "smart_toilet_model_j08u_name": "J-08U",
-    "smart_toilet_model_j08u_desc": "515×370×120 мм · Умная крышка-биде"
+    "smart_toilet_model_bidet_lids_name": "Умные биде-крышки",
+    "smart_toilet_model_bidet_lids_desc": "Универсальная умная крышка-биде, совместима с большинством напольных и подвесных унитазов. Доступна в 3 размерах: J-07A (680×420×500 мм), J-08V (515×390×120 мм), J-08U (515×370×120 мм)."
   }
 }

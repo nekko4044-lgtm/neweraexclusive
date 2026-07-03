@@ -123,6 +123,7 @@
     "smart_toilet_filter_all": "All",
     "smart_toilet_filter_floor": "Floor-standing",
     "smart_toilet_filter_wall": "Wall-mounted",
+    "smart_toilet_filter_bidet": "Smart Bidet Lids",
     "smart_toilet_section_floor": "Floor-standing",
     "smart_toilet_section_wall": "Wall-mounted",
     "smart_toilet_section_bidet": "Smart Bidet Lids",
@@ -182,11 +183,7 @@
     "smart_toilet_model_y99gb_desc": "600×365×490 mm · 27 functions · Wall-mounted",
     "smart_toilet_model_y59gb_name": "Y59GB",
     "smart_toilet_model_y59gb_desc": "600×390×430 mm · 26 functions · Wall-mounted",
-    "smart_toilet_model_j07a_name": "J-07A",
-    "smart_toilet_model_j07a_desc": "680×420×500 mm · Smart bidet lid · PP material",
-    "smart_toilet_model_j08v_name": "J-08V",
-    "smart_toilet_model_j08v_desc": "515×390×120 mm · Smart bidet lid",
-    "smart_toilet_model_j08u_name": "J-08U",
-    "smart_toilet_model_j08u_desc": "515×370×120 mm · Smart bidet lid"
+    "smart_toilet_model_bidet_lids_name": "Smart Bidet Lids",
+    "smart_toilet_model_bidet_lids_desc": "Universal smart bidet lid compatible with most floor-standing and wall-mounted toilets. Available in 3 sizes: J-07A (680×420×500 mm), J-08V (515×390×120 mm), J-08U (515×370×120 mm)."
   }
 }

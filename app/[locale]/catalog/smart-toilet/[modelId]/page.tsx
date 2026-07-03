@@ -1,5 +1,6 @@
 import { ALL_MODELS } from '../modelData'
 import SmartToiletModelClient from './SmartToiletModelClient'
+import BidetLidsClient from './BidetLidsClient'
 
 export async function generateStaticParams() {
   const locales = ['en', 'ru', 'ar']
@@ -13,5 +14,8 @@ export default function SmartToiletModelPage({
 }: {
   params: { locale: string; modelId: string }
 }) {
+  if (params.modelId === 'bidet-lids') {
+    return <BidetLidsClient />
+  }
   return <SmartToiletModelClient modelId={params.modelId} />
 }

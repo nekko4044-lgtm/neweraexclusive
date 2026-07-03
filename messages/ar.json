@@ -123,6 +123,7 @@
     "smart_toilet_filter_all": "الكل",
     "smart_toilet_filter_floor": "أرضي",
     "smart_toilet_filter_wall": "معلق على الجدار",
+    "smart_toilet_filter_bidet": "أغطية بيديه الذكية",
     "smart_toilet_section_floor": "أرضي",
     "smart_toilet_section_wall": "معلق على الجدار",
     "smart_toilet_section_bidet": "أغطية بيديه ذكية",
@@ -182,11 +183,7 @@
     "smart_toilet_model_y99gb_desc": "600×365×490 مم · 27 وظيفة · معلق على الجدار",
     "smart_toilet_model_y59gb_name": "Y59GB",
     "smart_toilet_model_y59gb_desc": "600×390×430 مم · 26 وظيفة · معلق على الجدار",
-    "smart_toilet_model_j07a_name": "J-07A",
-    "smart_toilet_model_j07a_desc": "680×420×500 مم · غطاء بيديه ذكي · مادة PP",
-    "smart_toilet_model_j08v_name": "J-08V",
-    "smart_toilet_model_j08v_desc": "515×390×120 مم · غطاء بيديه ذكي",
-    "smart_toilet_model_j08u_name": "J-08U",
-    "smart_toilet_model_j08u_desc": "515×370×120 مم · غطاء بيديه ذكي"
+    "smart_toilet_model_bidet_lids_name": "أغطية البيديه الذكية",
+    "smart_toilet_model_bidet_lids_desc": "غطاء بيديه ذكي عالمي متوافق مع معظم المراحيض. متوفر في 3 مقاسات: J-07A (680×420×500 مم)، J-08V (515×390×120 مم)، J-08U (515×370×120 مم)."
   }
 }
