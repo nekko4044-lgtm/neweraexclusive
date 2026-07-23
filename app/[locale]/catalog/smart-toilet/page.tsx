@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl'
 import { useLocale } from 'next-intl'
 import { floorModels, wallModels, bidetModels } from './modelData'
 import type { SmartToiletModel } from './modelData'
+import { LiquidBackground } from '@/components/ui/LiquidBackground'
 
 // ─── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -190,11 +191,7 @@ export default function SmartToiletPage() {
     <div className="relative">
       {/* Fixed background */}
       <div className="fixed top-0 left-0 w-full h-[100svh] overflow-hidden z-0">
-        <img
-          src="/catalog/flexible-marbles/bg.jpg"
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover"
-        />
+        <LiquidBackground imageUrl="/catalog/flexible-marbles/bg.jpg" />
         <div ref={bgOverlayRef} className="absolute inset-0 bg-ink pointer-events-none" style={{ opacity: 0.35 }} />
         <div className="absolute inset-0 bg-gradient-to-b from-ink/60 via-transparent to-transparent pointer-events-none" />
 

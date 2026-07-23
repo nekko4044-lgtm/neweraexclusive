@@ -3,7 +3,9 @@
     "about": "About",
     "services": "Services",
     "why": "Why Us",
-    "contact": "Contact"
+    "contact": "Contact",
+    "blog": "Blog",
+    "catalog": "Catalog"
   },
   "hero": {
     "eyebrow": "Dubai · Interior Design",
@@ -71,6 +73,15 @@
   "footer": {
     "copy": "© 2026 New Era Interior Design. Dubai, UAE."
   },
+  "blog": {
+    "title": "Blog",
+    "description": "Insights on luxury interior design, premium materials and smart living in Dubai from New Era Exclusive.",
+    "read_more": "Read more",
+    "min_read": "min read",
+    "coming_soon": "Articles coming soon",
+    "coming_soon_sub": "We are preparing expert insights on luxury interior design in Dubai.",
+    "back_to_blog": "Back to Blog"
+  },
   "districts": {
     "eyebrow": "Where We Work",
     "heading": "Areas We Operate In"
@@ -79,6 +90,7 @@
     "eyebrow": "Our Collection",
     "hero_line1": "Our",
     "hero_line2": "Exclusive",
+    "breadcrumb_home": "Home",
     "breadcrumb_root": "Catalog",
     "about_collection": "About This Collection",
     "features_label": "Key Features",

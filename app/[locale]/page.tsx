@@ -12,6 +12,7 @@ import WhyUs from '@/components/WhyUs'
 import Contact from '@/components/Contact'
 import WhatsAppButton from '@/components/WhatsAppButton'
 import Footer from '@/components/Footer'
+import CatalogTab from '@/components/CatalogTab'
 
 export default function HomePage({ params: { locale } }: { params: { locale: string } }) {
   unstable_setRequestLocale(locale)
@@ -38,6 +39,7 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
         suppressHydrationWarning
       />
       <main>
+        <CatalogTab />
         <Cursor />
         <Navbar />
         <Hero />

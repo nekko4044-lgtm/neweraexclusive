@@ -4,7 +4,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
 import { useLocale } from 'next-intl'
-import { motion, AnimatePresence, useMotionValue } from 'framer-motion'
+import { motion, AnimatePresence, useMotionValue, animate } from 'framer-motion'
+import { LiquidBackground } from '@/components/ui/LiquidBackground'
 
 // ─── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -224,75 +225,24 @@ function Gallery({ slug, categoryName }: { slug: string; categoryName: string })
   const count = images.length || 1
 
   const [active, setActive] = useState(0)
-  const [prev, setPrev] = useState<number | null>(null)
-  const [transitioning, setTransitioning] = useState(false)
-  const [fadingIn, setFadingIn] = useState(true)
-
   const activeImg = images[active] ?? null
-  const prevImg = prev !== null ? (images[prev] ?? null) : null
-
-  function select(idx: number) {
-    if (idx === active || transitioning) return
-    setPrev(active)
-    setTransitioning(true)
-    setFadingIn(false)
-    setTimeout(() => {
-      setActive(idx)
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => setFadingIn(true))
-      })
-    }, 400)
-    setTimeout(() => {
-      setPrev(null)
-      setTransitioning(false)
-    }, 1000)
-  }
 
   return (
     <div>
       <div className="relative aspect-square rounded-2xl overflow-hidden bg-stone">
         {!activeImg && <DotPattern id="dots-gallery-bg" />}
-
-        {/* Previous image — fades out */}
-        {prevImg && (
-          <img
-            src={prevImg}
-            alt=""
-            className="absolute inset-0 w-full h-full object-cover z-[2]"
-            style={{
-              opacity: transitioning ? 0 : 1,
-              transition: 'opacity 400ms cubic-bezier(0.32,0.72,0,1)',
-            }}
-          />
-        )}
-
-        {/* Active image — fades in */}
         {activeImg ? (
           <img
+            key={activeImg}
             src={activeImg}
             alt=""
-            className="absolute inset-0 w-full h-full object-cover z-[3]"
-            style={{
-              opacity: fadingIn ? 1 : 0,
-              transition: 'opacity 600ms cubic-bezier(0.32,0.72,0,1)',
-            }}
+            className="absolute inset-0 w-full h-full object-cover"
           />
         ) : (
-          <div
-            className="absolute inset-0 z-[3] flex items-center justify-center"
-            style={{
-              opacity: fadingIn ? 1 : 0,
-              transition: 'opacity 600ms cubic-bezier(0.32,0.72,0,1)',
-            }}
-          >
-            <div className="flex flex-col items-center gap-3">
-              <span className="font-stat text-[clamp(3rem,8vw,6rem)] text-cream/10 select-none">
-                {String(active + 1).padStart(2, '0')}
-              </span>
-              <span className="font-body text-[10px] uppercase tracking-[0.3em] text-cream/20">
-                {categoryName}
-              </span>
-            </div>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="font-stat text-[clamp(3rem,8vw,6rem)] text-cream/10 select-none">
+              {String(active + 1).padStart(2, '0')}
+            </span>
           </div>
         )}
       </div>
@@ -301,7 +251,7 @@ function Gallery({ slug, categoryName }: { slug: string; categoryName: string })
         {Array.from({ length: count }).map((_, i) => (
           <button
             key={i}
-            onClick={() => select(i)}
+            onClick={() => setActive(i)}
             className="focus:outline-none focus-visible:ring-1 focus-visible:ring-gold/40 rounded-xl"
             aria-label={`View image ${i + 1} of ${count}`}
           >
@@ -403,15 +353,19 @@ function InteriorMobileSwiper({ photos }: { photos: string[] }) {
 function InteriorDesktopStrip({ photos }: { photos: string[] }) {
   const containerRef = useRef<HTMLDivElement>(null)
   const trackRef = useRef<HTMLDivElement>(null)
+  const maxDragRef = useRef(-3000)
   const [maxDrag, setMaxDrag] = useState(-3000)
   const [progress, setProgress] = useState(0)
   const x = useMotionValue(0)
+  const targetX = useRef(0)
 
   useEffect(() => {
     const update = () => {
       if (containerRef.current && trackRef.current) {
         const max = -(trackRef.current.scrollWidth - containerRef.current.clientWidth + 1)
-        setMaxDrag(Math.min(-10, max))
+        const clamped = Math.min(-10, max)
+        maxDragRef.current = clamped
+        setMaxDrag(clamped)
       }
     }
     update()
@@ -421,18 +375,38 @@ function InteriorDesktopStrip({ photos }: { photos: string[] }) {
 
   useEffect(() => {
     return x.on('change', v => {
-      setProgress(Math.min(1, Math.max(0, Math.abs(v) / Math.abs(maxDrag))))
+      setProgress(Math.min(1, Math.max(0, Math.abs(v) / Math.abs(maxDragRef.current))))
     })
-  }, [x, maxDrag])
+  }, [x])
+
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault()
+      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY
+      targetX.current = Math.max(maxDragRef.current, Math.min(0, targetX.current - delta * 1.5))
+      animate(x, targetX.current, { type: 'spring', stiffness: 500, damping: 50, restDelta: 0.5 })
+    }
+    el.addEventListener('wheel', onWheel, { passive: false })
+    return () => el.removeEventListener('wheel', onWheel)
+  }, [x])
 
   return (
     <div className="flex flex-col gap-5">
-      <div ref={containerRef} className="relative overflow-hidden">
+      <div ref={containerRef} className="relative overflow-hidden cursor-grab active:cursor-grabbing">
         <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-ink to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-ink to-transparent z-10 pointer-events-none" />
-        <motion.div ref={trackRef} drag="x" dragConstraints={{ left: maxDrag, right: 0 }} dragElastic={0.04}
-          dragTransition={{ timeConstant: 220, power: 0.28 }} style={{ x, cursor: 'grab' }} whileDrag={{ cursor: 'grabbing' }}
-          className="flex gap-4 px-16 w-fit py-3 select-none">
+        <motion.div
+          ref={trackRef}
+          drag="x"
+          dragConstraints={{ left: maxDrag, right: 0 }}
+          dragElastic={0.04}
+          dragTransition={{ timeConstant: 220, power: 0.28 }}
+          onDragEnd={() => { targetX.current = x.get() }}
+          style={{ x }}
+          className="flex gap-4 px-16 w-fit py-3 select-none"
+        >
           {photos.map((src, i) => (
             <div key={src} className="relative flex-shrink-0 w-[360px] h-[268px] rounded-2xl overflow-hidden border border-white/8 bg-stone group">
               <img src={src} alt="" className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" draggable={false} />
@@ -443,7 +417,7 @@ function InteriorDesktopStrip({ photos }: { photos: string[] }) {
         </motion.div>
       </div>
       <div className="px-16">
-        <div className="h-[1px] bg-white/8 relative overflow-hidden rounded-full">
+        <div className="h-[3px] bg-white/8 relative overflow-hidden rounded-full cursor-pointer">
           <motion.div className="absolute inset-y-0 left-0 bg-gradient-to-r from-gold/30 to-gold/60 rounded-full"
             animate={{ width: `${Math.max(4, progress * 100)}%` }} transition={{ duration: 0.08 }} />
         </div>
@@ -546,11 +520,7 @@ export default function CatalogSlugClient({ slug }: { slug: string }) {
     <div className="relative">
       {/* Fixed background */}
       <div className="fixed top-0 left-0 w-full h-[100svh] overflow-hidden z-0">
-        <img
-          src="/catalog/flexible-marbles/bg.jpg"
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover"
-        />
+        <LiquidBackground imageUrl="/catalog/flexible-marbles/bg.jpg" />
         {/* Darkening overlay — starts at 0.35, driven by scroll up to 0.88 */}
         <div
           ref={bgOverlayRef}

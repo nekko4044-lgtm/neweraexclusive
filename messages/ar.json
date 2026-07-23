@@ -3,7 +3,9 @@
     "about": "من نحن",
     "services": "خدماتنا",
     "why": "لماذا نحن",
-    "contact": "تواصل"
+    "contact": "تواصل",
+    "blog": "المدونة",
+    "catalog": "الكتالوج"
   },
   "hero": {
     "eyebrow": "دبي · تصميم داخلي",
@@ -71,6 +73,15 @@
   "footer": {
     "copy": "© 2026 New Era Interior Design. دبي، الإمارات."
   },
+  "blog": {
+    "title": "المدونة",
+    "description": "رؤى حول تصميم الديكور الفاخر والمواد المتميزة والمنازل الذكية في دبي من نيو إيرا إكسكلوسيف.",
+    "read_more": "اقرأ المزيد",
+    "min_read": "دقائق قراءة",
+    "coming_soon": "المقالات قادمة قريباً",
+    "coming_soon_sub": "نحن نعدّ محتوى متخصصاً حول تصميم الديكور الفاخر في دبي.",
+    "back_to_blog": "العودة إلى المدونة"
+  },
   "districts": {
     "eyebrow": "أين نعمل",
     "heading": "المناطق التي نعمل فيها"
@@ -79,6 +90,7 @@
     "eyebrow": "مجموعتنا",
     "hero_line1": "حصرنا",
     "hero_line2": "المميز",
+    "breadcrumb_home": "الرئيسية",
     "breadcrumb_root": "كتالوج",
     "about_collection": "عن المجموعة",
     "features_label": "المزايا الرئيسية",

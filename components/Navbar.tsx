@@ -37,10 +37,12 @@ export default function Navbar() {
   }, [open])
 
   const links = [
-    { href: '#about',    label: t('about') },
-    { href: '#services', label: t('services') },
-    { href: '#why',      label: t('why') },
-    { href: '#contact',  label: t('contact') },
+    { href: '#about',    label: t('about'),    external: false },
+    { href: '#services', label: t('services'), external: false },
+    { href: '#why',      label: t('why'),      external: false },
+    { href: '#contact',  label: t('contact'),  external: false },
+    { href: `/${locale}/blog`,    label: t('blog'),    external: true },
+    { href: `/${locale}/catalog`, label: t('catalog'), external: true },
   ]
 
   return (
@@ -89,24 +91,45 @@ export default function Navbar() {
         <div className="p-2">
 
           {links.map((link, i) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={() => setOpen(false)}
-              className="flex items-center justify-between px-4 py-3.5 rounded-xl hover:bg-white/6 group transition-all duration-300"
-              style={{
-                opacity:   open ? 1 : 0,
-                transform: open ? 'translateY(0)' : 'translateY(8px)',
-                transition: `opacity 0.4s cubic-bezier(0.32,0.72,0,1) ${i * 50}ms, transform 0.4s cubic-bezier(0.32,0.72,0,1) ${i * 50}ms, background 0.3s`,
-              }}
-            >
-              <span className="font-display text-[1.35rem] font-light text-cream/85 group-hover:text-gold transition-colors duration-300 leading-none">
-                {link.label}
-              </span>
-              <span className="text-cream/20 group-hover:text-gold/60 transition-all duration-300 group-hover:translate-x-0.5">
-                →
-              </span>
-            </a>
+            link.external ? (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setOpen(false)}
+                className="flex items-center justify-between px-4 py-3.5 rounded-xl hover:bg-white/6 group transition-all duration-300"
+                style={{
+                  opacity:   open ? 1 : 0,
+                  transform: open ? 'translateY(0)' : 'translateY(8px)',
+                  transition: `opacity 0.4s cubic-bezier(0.32,0.72,0,1) ${i * 50}ms, transform 0.4s cubic-bezier(0.32,0.72,0,1) ${i * 50}ms, background 0.3s`,
+                }}
+              >
+                <span className="font-display text-[1.35rem] font-light text-cream/85 group-hover:text-gold transition-colors duration-300 leading-none">
+                  {link.label}
+                </span>
+                <span className="text-cream/20 group-hover:text-gold/60 transition-all duration-300 group-hover:translate-x-0.5">
+                  →
+                </span>
+              </Link>
+            ) : (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={() => setOpen(false)}
+                className="flex items-center justify-between px-4 py-3.5 rounded-xl hover:bg-white/6 group transition-all duration-300"
+                style={{
+                  opacity:   open ? 1 : 0,
+                  transform: open ? 'translateY(0)' : 'translateY(8px)',
+                  transition: `opacity 0.4s cubic-bezier(0.32,0.72,0,1) ${i * 50}ms, transform 0.4s cubic-bezier(0.32,0.72,0,1) ${i * 50}ms, background 0.3s`,
+                }}
+              >
+                <span className="font-display text-[1.35rem] font-light text-cream/85 group-hover:text-gold transition-colors duration-300 leading-none">
+                  {link.label}
+                </span>
+                <span className="text-cream/20 group-hover:text-gold/60 transition-all duration-300 group-hover:translate-x-0.5">
+                  →
+                </span>
+              </a>
+            )
           ))}
 
           {/* Divider */}

@@ -3,7 +3,9 @@
     "about": "О нас",
     "services": "Услуги",
     "why": "Почему мы",
-    "contact": "Контакт"
+    "contact": "Контакт",
+    "blog": "Блог",
+    "catalog": "Каталог"
   },
   "hero": {
     "eyebrow": "Дубай · Дизайн интерьера",
@@ -71,6 +73,15 @@
   "footer": {
     "copy": "© 2026 New Era Interior Design. Дубай, ОАЭ."
   },
+  "blog": {
+    "title": "Блог",
+    "description": "Инсайты о роскошном дизайне интерьеров, премиальных материалах и умном доме в Дубае от New Era Exclusive.",
+    "read_more": "Читать далее",
+    "min_read": "мин чтения",
+    "coming_soon": "Статьи скоро появятся",
+    "coming_soon_sub": "Мы готовим экспертные материалы о роскошном дизайне интерьеров в Дубае.",
+    "back_to_blog": "Назад в блог"
+  },
   "districts": {
     "eyebrow": "Где мы работаем",
     "heading": "Районы в которых мы работаем"
@@ -79,6 +90,7 @@
     "eyebrow": "Наша коллекция",
     "hero_line1": "Наш",
     "hero_line2": "Эксклюзив",
+    "breadcrumb_home": "Главная",
     "breadcrumb_root": "Каталог",
     "about_collection": "О коллекции",
     "features_label": "Ключевые особенности",

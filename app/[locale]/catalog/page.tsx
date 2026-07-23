@@ -221,6 +221,23 @@ export default function CatalogPage() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Seamless video loop — avoid browser's native loop gap
+  const videoDesktopRef = useRef<HTMLVideoElement>(null)
+  const videoMobileRef = useRef<HTMLVideoElement>(null)
+  useEffect(() => {
+    const restart = (v: HTMLVideoElement) => () => { v.currentTime = 0; v.play() }
+    const d = videoDesktopRef.current
+    const m = videoMobileRef.current
+    const rd = d ? restart(d) : null
+    const rm = m ? restart(m) : null
+    if (d && rd) d.addEventListener('ended', rd)
+    if (m && rm) m.addEventListener('ended', rm)
+    return () => {
+      if (d && rd) d.removeEventListener('ended', rd)
+      if (m && rm) m.removeEventListener('ended', rm)
+    }
+  }, [])
+
   // Eyebrow reveal
   const eyebrowRef = useReveal(200)
 
@@ -273,14 +290,16 @@ export default function CatalogPage() {
       <div className="fixed top-0 left-0 w-full h-[100svh] overflow-hidden z-0">
         {/* Desktop video */}
         <video
-          autoPlay muted loop playsInline
+          ref={videoDesktopRef}
+          autoPlay muted playsInline preload="auto"
           className="absolute inset-0 w-full h-full object-cover hidden md:block"
         >
           <source src="/videos/hero-desktop.mp4" type="video/mp4" />
         </video>
         {/* Mobile video */}
         <video
-          autoPlay muted loop playsInline
+          ref={videoMobileRef}
+          autoPlay muted playsInline preload="auto"
           className="absolute inset-0 w-full h-full object-cover block md:hidden"
         >
           <source src="/videos/hero-mobile.mp4" type="video/mp4" />
@@ -327,6 +346,18 @@ export default function CatalogPage() {
         >
           <div ref={lineRef} className="w-full h-full bg-gold/30" style={{ transform: 'translateY(-100%)' }} />
         </div>
+
+        {/* Breadcrumb */}
+        <nav
+          className="absolute top-28 md:top-32 ltr:left-6 rtl:right-6 md:ltr:left-16 md:rtl:right-16 flex items-center gap-2 font-body text-[14px] uppercase tracking-[0.2em] text-cream/40"
+          style={{ textShadow: '0 1px 8px rgba(0,0,0,0.8)' }}
+        >
+          <Link href={`/${locale}`} className="hover:text-gold/80 transition-colors duration-300">
+            {t('breadcrumb_home')}
+          </Link>
+          <span className="text-cream/25">/</span>
+          <span className="text-cream/70">{t('breadcrumb_root')}</span>
+        </nav>
 
         {/* Hero content — title at bottom */}
         <div className="absolute inset-0 flex flex-col justify-end px-6 md:px-16 pb-16 md:pb-24">
