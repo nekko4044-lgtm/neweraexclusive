@@ -26,6 +26,15 @@ export default function Footer() {
             </button>
 
             <a
+              href="https://parametrika.ae"
+              target="_blank"
+              rel="noopener"
+              className="font-body text-sm text-cream/40 hover:text-gold/70 transition-colors duration-300 whitespace-nowrap"
+            >
+              {t('part')}
+            </a>
+
+            <a
               href="https://t.me/neko_4044"
               target="_blank"
               rel="noopener noreferrer"
