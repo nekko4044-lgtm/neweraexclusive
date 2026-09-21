@@ -143,49 +143,49 @@ const CATEGORIES: Record<string, CategoryMeta> = {
 
 const galleryImages: Record<string, string[]> = {
   'flexible-marbles': [
-    '/catalog/flexible-marbles/top-picks/page009_img03.png',
-    '/catalog/flexible-marbles/top-picks/page021_img02.png',
-    '/catalog/flexible-marbles/top-picks/page024_img01.png',
-    '/catalog/flexible-marbles/top-picks/page024_img03.png',
-    '/catalog/flexible-marbles/top-picks/page024_img04.png',
-    '/catalog/flexible-marbles/top-picks/page024_img05.png',
-    '/catalog/flexible-marbles/top-picks/page025_img01.png',
-    '/catalog/flexible-marbles/top-picks/page025_img02.png',
-    '/catalog/flexible-marbles/top-picks/page025_img04.png',
-    '/catalog/flexible-marbles/top-picks/page025_img05.png',
-    '/catalog/flexible-marbles/top-picks/page026_img01.png',
-    '/catalog/flexible-marbles/top-picks/page026_img02.png',
-    '/catalog/flexible-marbles/top-picks/page026_img03.png',
-    '/catalog/flexible-marbles/top-picks/page026_img04.png',
+    '/catalog/flexible-marbles/top-picks/page009_img03.webp',
+    '/catalog/flexible-marbles/top-picks/page021_img02.webp',
+    '/catalog/flexible-marbles/top-picks/page024_img01.webp',
+    '/catalog/flexible-marbles/top-picks/page024_img03.webp',
+    '/catalog/flexible-marbles/top-picks/page024_img04.webp',
+    '/catalog/flexible-marbles/top-picks/page024_img05.webp',
+    '/catalog/flexible-marbles/top-picks/page025_img01.webp',
+    '/catalog/flexible-marbles/top-picks/page025_img02.webp',
+    '/catalog/flexible-marbles/top-picks/page025_img04.webp',
+    '/catalog/flexible-marbles/top-picks/page025_img05.webp',
+    '/catalog/flexible-marbles/top-picks/page026_img01.webp',
+    '/catalog/flexible-marbles/top-picks/page026_img02.webp',
+    '/catalog/flexible-marbles/top-picks/page026_img03.webp',
+    '/catalog/flexible-marbles/top-picks/page026_img04.webp',
   ],
   'chandeliers': [
-    '/catalog/chandeliers/page027_img01.png',
-    '/catalog/chandeliers/page028_img01.png',
-    '/catalog/chandeliers/page029_img01.png',
-    '/catalog/chandeliers/page029_img02.png',
-    '/catalog/chandeliers/page029_img03.png',
-    '/catalog/chandeliers/page029_img04.png',
-    '/catalog/chandeliers/page030_img02.png',
-    '/catalog/chandeliers/page030_img03.png',
-    '/catalog/chandeliers/page031_img01.png',
-    '/catalog/chandeliers/page032_img01.png',
-    '/catalog/chandeliers/page032_img02.png',
-    '/catalog/chandeliers/page034_img01.png',
-    '/catalog/chandeliers/page035_img02.png',
+    '/catalog/chandeliers/page027_img01.webp',
+    '/catalog/chandeliers/page028_img01.webp',
+    '/catalog/chandeliers/page029_img01.webp',
+    '/catalog/chandeliers/page029_img02.webp',
+    '/catalog/chandeliers/page029_img03.webp',
+    '/catalog/chandeliers/page029_img04.webp',
+    '/catalog/chandeliers/page030_img02.webp',
+    '/catalog/chandeliers/page030_img03.webp',
+    '/catalog/chandeliers/page031_img01.webp',
+    '/catalog/chandeliers/page032_img01.webp',
+    '/catalog/chandeliers/page032_img02.webp',
+    '/catalog/chandeliers/page034_img01.webp',
+    '/catalog/chandeliers/page035_img02.webp',
     '/catalog/chandeliers/photo_2026-07-03 21.24.16.jpeg',
     '/catalog/chandeliers/photo_2026-07-03 21.24.40.jpeg',
     '/catalog/chandeliers/photo_2026-07-03 21.25.43.jpeg',
   ],
   'soft-wall-panels': [
-    '/catalog/soft-wall-panels/page036_img01.png',
-    '/catalog/soft-wall-panels/page037_img01.png',
-    '/catalog/soft-wall-panels/page037_img02.png',
-    '/catalog/soft-wall-panels/page037_img03.png',
+    '/catalog/soft-wall-panels/page036_img01.webp',
+    '/catalog/soft-wall-panels/page037_img01.webp',
+    '/catalog/soft-wall-panels/page037_img02.webp',
+    '/catalog/soft-wall-panels/page037_img03.webp',
   ],
   'smart-dryers': [
-    '/catalog/smart-dryers/page041_img02.png',
-    '/catalog/smart-dryers/page042_img01.png',
-    '/catalog/smart-dryers/page043_img01.png',
+    '/catalog/smart-dryers/page041_img02.webp',
+    '/catalog/smart-dryers/page042_img01.webp',
+    '/catalog/smart-dryers/page043_img01.webp',
     '/catalog/smart-dryers/photo_2026-07-03 21.25.09.jpeg',
   ],
 }
@@ -206,6 +206,7 @@ function Thumb({ index, active, src }: { index: number; active: boolean; src: st
           <img
             src={src}
             alt=""
+            loading="lazy"
             className="absolute inset-0 w-full h-full object-cover"
           />
         ) : (
@@ -236,6 +237,7 @@ function Gallery({ slug, categoryName }: { slug: string; categoryName: string })
             key={activeImg}
             src={activeImg}
             alt=""
+            loading={active === 0 ? 'eager' : 'lazy'}
             className="absolute inset-0 w-full h-full object-cover"
           />
         ) : (
@@ -267,23 +269,23 @@ function Gallery({ slug, categoryName }: { slug: string; categoryName: string })
 
 const INTERIOR_IMAGES: Record<string, string[]> = {
   'flexible-marbles': [
-    '/catalog/flexible-marbles/interior/page013_img01.png',
-    '/catalog/flexible-marbles/interior/page014_img01.png',
-    '/catalog/flexible-marbles/interior/page014_img02.png',
-    '/catalog/flexible-marbles/interior/page015_img01.png',
-    '/catalog/flexible-marbles/interior/page015_img02.png',
-    '/catalog/flexible-marbles/interior/page015_img03.png',
-    '/catalog/flexible-marbles/interior/page016_img01.png',
-    '/catalog/flexible-marbles/interior/page016_img02.png',
-    '/catalog/flexible-marbles/interior/page017_img01.png',
-    '/catalog/flexible-marbles/interior/page017_img02.png',
-    '/catalog/flexible-marbles/interior/page018_img01.png',
-    '/catalog/flexible-marbles/interior/page019_img04.png',
-    '/catalog/flexible-marbles/interior/page020_img03.png',
-    '/catalog/flexible-marbles/interior/page022_img02.png',
-    '/catalog/flexible-marbles/interior/page022_img03.png',
-    '/catalog/flexible-marbles/interior/page023_img01.png',
-    '/catalog/flexible-marbles/interior/page023_img02.png',
+    '/catalog/flexible-marbles/interior/page013_img01.webp',
+    '/catalog/flexible-marbles/interior/page014_img01.webp',
+    '/catalog/flexible-marbles/interior/page014_img02.webp',
+    '/catalog/flexible-marbles/interior/page015_img01.webp',
+    '/catalog/flexible-marbles/interior/page015_img02.webp',
+    '/catalog/flexible-marbles/interior/page015_img03.webp',
+    '/catalog/flexible-marbles/interior/page016_img01.webp',
+    '/catalog/flexible-marbles/interior/page016_img02.webp',
+    '/catalog/flexible-marbles/interior/page017_img01.webp',
+    '/catalog/flexible-marbles/interior/page017_img02.webp',
+    '/catalog/flexible-marbles/interior/page018_img01.webp',
+    '/catalog/flexible-marbles/interior/page019_img04.webp',
+    '/catalog/flexible-marbles/interior/page020_img03.webp',
+    '/catalog/flexible-marbles/interior/page022_img02.webp',
+    '/catalog/flexible-marbles/interior/page022_img03.webp',
+    '/catalog/flexible-marbles/interior/page023_img01.webp',
+    '/catalog/flexible-marbles/interior/page023_img02.webp',
     '/catalog/flexible-marbles/interior/photo_2026-07-03 21.25.32.jpeg',
     '/catalog/flexible-marbles/interior/photo_2026-07-03 21.25.53.jpeg',
   ],
@@ -313,7 +315,7 @@ function InteriorMobileSwiper({ photos }: { photos: string[] }) {
           return (
             <div key={`bg-${offset}-${idx}`} className="absolute inset-0 rounded-2xl overflow-hidden border border-white/[0.05]"
               style={{ transform: `scale(${1 - offset * 0.045}) translateY(${offset * 11}px)`, zIndex: 10 - offset, opacity: 0.45 - offset * 0.12 }}>
-              <img src={photos[idx]} alt="" className="absolute inset-0 w-full h-full object-cover" />
+              <img src={photos[idx]} alt="" loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
             </div>
           )
         })}
@@ -323,7 +325,7 @@ function InteriorMobileSwiper({ photos }: { photos: string[] }) {
             onDragEnd={(_, info) => { if (info.offset.x < -55) go(1); else if (info.offset.x > 55) go(-1) }}
             className="absolute inset-0 rounded-2xl overflow-hidden border border-white/[0.12] touch-none select-none"
             style={{ zIndex: 20, cursor: 'grab' }} whileTap={{ scale: 1.01 }}>
-            <img src={photos[current]} alt="" className="absolute inset-0 w-full h-full object-cover pointer-events-none" draggable={false} />
+            <img src={photos[current]} alt="" loading="lazy" className="absolute inset-0 w-full h-full object-cover pointer-events-none" draggable={false} />
             <div className="absolute inset-0 bg-gradient-to-t from-ink/65 via-transparent to-transparent pointer-events-none" />
             <div className="absolute top-4 right-4 w-7 h-7 border-t border-r border-gold/35" />
             <div className="absolute bottom-4 left-4 w-7 h-7 border-b border-l border-gold/35" />
@@ -409,7 +411,7 @@ function InteriorDesktopStrip({ photos }: { photos: string[] }) {
         >
           {photos.map((src, i) => (
             <div key={src} className="relative flex-shrink-0 w-[360px] h-[268px] rounded-2xl overflow-hidden border border-white/8 bg-stone group">
-              <img src={src} alt="" className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" draggable={false} />
+              <img src={src} alt="" loading="lazy" className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" draggable={false} />
               <div className="absolute inset-0 bg-gradient-to-t from-ink/50 via-transparent to-transparent pointer-events-none" />
               <span className="absolute bottom-3.5 right-4 font-body text-[9px] tracking-[0.25em] text-cream/25">{String(i + 1).padStart(2, '0')}</span>
             </div>

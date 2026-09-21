@@ -58,7 +58,7 @@ export default function Navbar() {
       `}>
         {/* Logo */}
         <Link href={`/${locale}`} className="flex-shrink-0">
-          <Image src="/logo.png" alt="New Era" width={40} height={40} className="rounded-full ring-1 ring-gold/30" />
+          <Image src="/logo.webp" alt="New Era" width={40} height={40} className="rounded-full ring-1 ring-gold/30" />
         </Link>
 
         {/* Menu toggle — all devices */}

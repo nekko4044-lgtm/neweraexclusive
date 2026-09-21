@@ -4,6 +4,9 @@ node_modules/
 *.mp4
 *.mov
 
+# Full-resolution originals kept locally after web optimization
+source-assets/
+
 out/
 
 # Internal project context (confidential)

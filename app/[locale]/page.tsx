@@ -22,7 +22,7 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
     '@type': 'WebPage',
     name: 'New Era Exclusive — Luxury Interior Design Dubai',
     description: 'Premium interior design and exclusive luxury materials in Dubai. Bespoke fit-out for villas, hotels and restaurants across UAE.',
-    url: `https://neweraexclusive.ae/${locale}`,
+    url: `https://neweraexclusive.ae/${locale}/`,
     isPartOf: {
       '@type': 'WebSite',
       name: 'New Era Exclusive',

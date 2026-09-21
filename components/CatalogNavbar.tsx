@@ -43,7 +43,7 @@ export default function CatalogNavbar() {
         {/* Logo */}
         <Link href={`/${locale}`} className="flex-shrink-0">
           <Image
-            src="/logo.png"
+            src="/logo.webp"
             alt="New Era"
             width={40}
             height={40}

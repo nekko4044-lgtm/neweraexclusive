@@ -17,8 +17,17 @@ export function generateMetadata({
 }: {
   params: { locale: string; modelId: string }
 }): Metadata {
-  const url = `${BASE}/${locale}/catalog/smart-toilet/${modelId}/`
-  return { alternates: { canonical: url } }
+  return {
+    alternates: {
+      canonical: `${BASE}/${locale}/catalog/smart-toilet/${modelId}/`,
+      languages: {
+        en: `${BASE}/en/catalog/smart-toilet/${modelId}/`,
+        ru: `${BASE}/ru/catalog/smart-toilet/${modelId}/`,
+        ar: `${BASE}/ar/catalog/smart-toilet/${modelId}/`,
+        'x-default': `${BASE}/en/catalog/smart-toilet/${modelId}/`,
+      },
+    },
+  }
 }
 
 export default function SmartToiletModelPage({

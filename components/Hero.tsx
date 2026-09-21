@@ -1,16 +1,15 @@
 'use client'
 
 import React, { useEffect, useRef, useState, useCallback } from 'react'
-import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 
 const neighborhoods = [
-  { name: 'Bluewaters Island',  src: '/hero/bluewaters.png',   srcMobile: '/hero/bluewaters-mobile.png' },
-  { name: '22 Carat',           src: '/hero/22carat.png',      srcMobile: '/hero/22carat-mobile.png' },
-  { name: 'Dubai Hills Estate', src: '/hero/dubailhills.png',  srcMobile: '/hero/dubailhills-mobile.png' },
-  { name: 'W Residences',       src: '/hero/wresidences.png',  srcMobile: '/hero/wresidences-mobile.png' },
-  { name: 'Palm Jumeirah',      src: '/hero/palmjumeirah.png', srcMobile: '/hero/palmjumeirah-mobile.png' },
-  { name: 'Abu Dhabi Islands',  src: '/hero/abudhabi.png',     srcMobile: '/hero/abudhabi-mobile.png' },
+  { name: 'Bluewaters Island',  desktop: '/hero/bluewaters.webp',   mobile: '/hero/bluewaters-mobile.webp' },
+  { name: '22 Carat',           desktop: '/hero/22carat.webp',      mobile: '/hero/22carat-mobile.webp' },
+  { name: 'Dubai Hills Estate', desktop: '/hero/dubailhills.webp',  mobile: '/hero/dubailhills-mobile.webp' },
+  { name: 'W Residences',       desktop: '/hero/wresidences.webp',  mobile: '/hero/wresidences-mobile.webp' },
+  { name: 'Palm Jumeirah',      desktop: '/hero/palmjumeirah.webp', mobile: '/hero/palmjumeirah-mobile.webp' },
+  { name: 'Abu Dhabi Islands',  desktop: '/hero/abudhabi.webp',     mobile: '/hero/abudhabi-mobile.webp' },
 ]
 
 function WordReveal({ text, delayStart = 0, className = '', style }: {
@@ -33,34 +32,32 @@ function WordReveal({ text, delayStart = 0, className = '', style }: {
   )
 }
 
-function SlideBackground({ src, srcMobile, name, active }: {
-  src: string; srcMobile: string; name: string; active: boolean
+function SlideBackground({ desktopSrc, mobileSrc, name, visible, onReady }: {
+  desktopSrc: string; mobileSrc: string; name: string; visible: boolean; onReady?: () => void
 }) {
+  const imageRef = useRef<HTMLImageElement>(null)
+
+  useEffect(() => {
+    if (imageRef.current?.complete) onReady?.()
+  }, [desktopSrc, mobileSrc, onReady])
+
   return (
     <div
       className="absolute inset-0 transition-opacity duration-1000 ease-[cubic-bezier(0.32,0.72,0,1)]"
-      style={{ opacity: active ? 1 : 0 }}
+      style={{ opacity: visible ? 1 : 0 }}
+      aria-hidden={!visible}
     >
-      {/* Desktop — landscape */}
-      <Image
-        src={src}
-        alt={name}
-        fill
-        priority={active}
-        className="hidden md:block object-cover object-center"
-      />
-      {/* Mobile — portrait */}
-      <Image
-        src={srcMobile}
-        alt={name}
-        fill
-        priority={active}
-        className="block md:hidden object-cover object-center"
-        onError={(e) => {
-          // fallback to desktop version if mobile not available yet
-          ;(e.target as HTMLImageElement).src = src
-        }}
-      />
+      <picture className="absolute inset-0 block">
+        <source media="(min-width: 768px)" srcSet={desktopSrc} type="image/webp" />
+        <img
+          ref={imageRef}
+          src={mobileSrc}
+          alt={name}
+          loading="eager"
+          className="absolute inset-0 h-full w-full object-cover object-center"
+          onLoad={onReady}
+        />
+      </picture>
       {/* Dark overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-ink/80 via-ink/55 to-ink/85" />
     </div>
@@ -71,6 +68,10 @@ export default function Hero() {
   const t = useTranslations('hero')
   const lineRef   = useRef<HTMLDivElement>(null)
   const [slide, setSlide] = useState(0)
+  const [outgoingSlide, setOutgoingSlide] = useState<number | null>(null)
+  const [incomingReady, setIncomingReady] = useState(true)
+  const slideRef = useRef(0)
+  const activeNeighborhood = neighborhoods[slide]
 
   useEffect(() => {
     const setVh = () => {
@@ -79,13 +80,42 @@ export default function Hero() {
     setVh()
   }, [])
 
-  const next = useCallback(() => setSlide(s => (s + 1) % neighborhoods.length), [])
-  const prev = useCallback(() => setSlide(s => (s - 1 + neighborhoods.length) % neighborhoods.length), [])
+  const revealIncoming = useCallback(() => setIncomingReady(true), [])
+
+  const goTo = useCallback((target: number) => {
+    if (target === slideRef.current) return
+
+    setOutgoingSlide(slideRef.current)
+    setIncomingReady(false)
+    slideRef.current = target
+    setSlide(target)
+  }, [])
+
+  const next = useCallback(() => goTo((slideRef.current + 1) % neighborhoods.length), [goTo])
+  const prev = useCallback(() => goTo((slideRef.current - 1 + neighborhoods.length) % neighborhoods.length), [goTo])
 
   useEffect(() => {
     const id = setInterval(next, 5500)
     return () => clearInterval(id)
   }, [next])
+
+  useEffect(() => {
+    const isDesktop = window.matchMedia('(min-width: 768px)').matches
+    const preload = (index: number) => {
+      const image = new window.Image()
+      image.src = isDesktop ? neighborhoods[index].desktop : neighborhoods[index].mobile
+    }
+
+    preload((slide + 1) % neighborhoods.length)
+    preload((slide - 1 + neighborhoods.length) % neighborhoods.length)
+  }, [slide])
+
+  useEffect(() => {
+    if (outgoingSlide === null || !incomingReady) return
+
+    const timer = window.setTimeout(() => setOutgoingSlide(null), 1050)
+    return () => window.clearTimeout(timer)
+  }, [incomingReady, outgoingSlide])
 
   const touchStartX = useRef(0)
   const onTouchStart = useCallback((e: React.TouchEvent) => {
@@ -113,9 +143,23 @@ export default function Hero() {
 
       {/* Background slideshow */}
       <div className="absolute inset-0 z-0">
-        {neighborhoods.map((n, i) => (
-          <SlideBackground key={n.name} src={n.src} srcMobile={n.srcMobile} name={n.name} active={i === slide} />
-        ))}
+        {outgoingSlide !== null && (
+          <SlideBackground
+            key={`outgoing-${neighborhoods[outgoingSlide].name}`}
+            desktopSrc={neighborhoods[outgoingSlide].desktop}
+            mobileSrc={neighborhoods[outgoingSlide].mobile}
+            name={neighborhoods[outgoingSlide].name}
+            visible={!incomingReady}
+          />
+        )}
+        <SlideBackground
+          key={`incoming-${activeNeighborhood.name}`}
+          desktopSrc={activeNeighborhood.desktop}
+          mobileSrc={activeNeighborhood.mobile}
+          name={activeNeighborhood.name}
+          visible={incomingReady}
+          onReady={revealIncoming}
+        />
       </div>
 
       {/* Dome ghost */}
@@ -232,7 +276,7 @@ export default function Hero() {
           {neighborhoods.map((_, i) => (
             <button
               key={i}
-              onClick={() => setSlide(i)}
+              onClick={() => goTo(i)}
               className={`rounded-full transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${
                 i === slide ? 'w-4 h-[3px] bg-gold/60' : 'w-[3px] h-[3px] bg-cream/20 hover:bg-cream/40'
               }`}

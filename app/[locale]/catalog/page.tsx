@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
 import { useLocale } from 'next-intl'
@@ -188,6 +188,15 @@ function CategoryCard({ slug, locale, name, subEyebrow, revealDelay, imageSrc }:
 export default function CatalogPage() {
   const t = useTranslations('catalog')
   const locale = useLocale()
+  const [isMobile, setIsMobile] = useState<boolean | null>(null)
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 767px)')
+    const updateViewport = () => setIsMobile(mediaQuery.matches)
+    updateViewport()
+    mediaQuery.addEventListener('change', updateViewport)
+    return () => mediaQuery.removeEventListener('change', updateViewport)
+  }, [])
 
   // Vertical gold line animation on mount
   const lineRef = useRef<HTMLDivElement>(null)
@@ -222,21 +231,19 @@ export default function CatalogPage() {
   }, [])
 
   // Seamless video loop — avoid browser's native loop gap
-  const videoDesktopRef = useRef<HTMLVideoElement>(null)
-  const videoMobileRef = useRef<HTMLVideoElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const videoSrc = isMobile === null
+    ? null
+    : isMobile ? '/videos/hero-mobile-lite.mp4' : '/videos/hero-desktop.mp4'
   useEffect(() => {
     const restart = (v: HTMLVideoElement) => () => { v.currentTime = 0; v.play() }
-    const d = videoDesktopRef.current
-    const m = videoMobileRef.current
-    const rd = d ? restart(d) : null
-    const rm = m ? restart(m) : null
-    if (d && rd) d.addEventListener('ended', rd)
-    if (m && rm) m.addEventListener('ended', rm)
+    const video = videoRef.current
+    const restartVideo = video ? restart(video) : null
+    if (video && restartVideo) video.addEventListener('ended', restartVideo)
     return () => {
-      if (d && rd) d.removeEventListener('ended', rd)
-      if (m && rm) m.removeEventListener('ended', rm)
+      if (video && restartVideo) video.removeEventListener('ended', restartVideo)
     }
-  }, [])
+  }, [videoSrc])
 
   // Eyebrow reveal
   const eyebrowRef = useReveal(200)
@@ -288,22 +295,15 @@ export default function CatalogPage() {
     <div className="relative">
       {/* ── Fixed video background — always behind everything ── */}
       <div className="fixed top-0 left-0 w-full h-[100svh] overflow-hidden z-0">
-        {/* Desktop video */}
-        <video
-          ref={videoDesktopRef}
-          autoPlay muted playsInline preload="auto"
-          className="absolute inset-0 w-full h-full object-cover hidden md:block"
-        >
-          <source src="/videos/hero-desktop.mp4" type="video/mp4" />
-        </video>
-        {/* Mobile video */}
-        <video
-          ref={videoMobileRef}
-          autoPlay muted playsInline preload="auto"
-          className="absolute inset-0 w-full h-full object-cover block md:hidden"
-        >
-          <source src="/videos/hero-mobile.mp4" type="video/mp4" />
-        </video>
+        {videoSrc && (
+          <video
+            key={videoSrc}
+            ref={videoRef}
+            src={videoSrc}
+            autoPlay muted playsInline preload="auto"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        )}
 
         {/* Scroll-driven darkening overlay */}
         <div

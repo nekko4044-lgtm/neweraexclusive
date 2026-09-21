@@ -59,7 +59,7 @@ export default function About() {
         {/* LEFT — team photo */}
         <div ref={r1} className="reveal relative aspect-[3/4] overflow-hidden rounded-2xl bg-stone">
           <Image
-            src="/team.jpeg"
+            src="/team.webp"
             alt="New Era Exclusive Team"
             fill
             className="object-cover object-top"
