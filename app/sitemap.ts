@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next'
 import { blogPosts } from '@/lib/blog'
+import { ALL_MODELS } from '@/app/[locale]/catalog/smart-toilet/modelData'
 
 const BASE = 'https://neweraexclusive.ae'
 const lastModified = new Date()
@@ -8,28 +9,28 @@ const catalogSlugs = ['flexible-marbles', 'chandeliers', 'soft-wall-panels', 'sm
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const homePages: MetadataRoute.Sitemap = locales.map(locale => ({
-    url: `${BASE}/${locale}`,
+    url: `${BASE}/${locale}/`,
     lastModified,
     changeFrequency: 'weekly',
     priority: locale === 'en' ? 1.0 : 0.95,
   }))
 
   const blogIndexPages: MetadataRoute.Sitemap = locales.map(locale => ({
-    url: `${BASE}/${locale}/blog`,
+    url: `${BASE}/${locale}/blog/`,
     lastModified,
     changeFrequency: 'weekly',
     priority: 0.8,
   }))
 
   const blogPostPages: MetadataRoute.Sitemap = blogPosts.map(post => ({
-    url: `${BASE}/${post.locale}/blog/${post.slug}`,
+    url: `${BASE}/${post.locale}/blog/${post.slug}/`,
     lastModified: new Date(post.date),
     changeFrequency: 'monthly',
     priority: 0.7,
   }))
 
   const catalogIndexPages: MetadataRoute.Sitemap = locales.map(locale => ({
-    url: `${BASE}/${locale}/catalog`,
+    url: `${BASE}/${locale}/catalog/`,
     lastModified,
     changeFrequency: 'monthly' as const,
     priority: 0.85,
@@ -37,7 +38,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const catalogSlugPages: MetadataRoute.Sitemap = locales.flatMap(locale =>
     catalogSlugs.map(slug => ({
-      url: `${BASE}/${locale}/catalog/${slug}`,
+      url: `${BASE}/${locale}/catalog/${slug}/`,
       lastModified,
       changeFrequency: 'monthly' as const,
       priority: 0.8,
@@ -45,11 +46,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
   )
 
   const smartToiletPage: MetadataRoute.Sitemap = locales.map(locale => ({
-    url: `${BASE}/${locale}/catalog/smart-toilet`,
+    url: `${BASE}/${locale}/catalog/smart-toilet/`,
     lastModified,
     changeFrequency: 'monthly' as const,
     priority: 0.8,
   }))
 
-  return [...homePages, ...catalogIndexPages, ...catalogSlugPages, ...smartToiletPage, ...blogIndexPages, ...blogPostPages]
+  const smartToiletModelPages: MetadataRoute.Sitemap = locales.flatMap(locale =>
+    ALL_MODELS.map(model => ({
+      url: `${BASE}/${locale}/catalog/smart-toilet/${model.id}/`,
+      lastModified,
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    }))
+  )
+
+  return [...homePages, ...catalogIndexPages, ...catalogSlugPages, ...smartToiletPage, ...smartToiletModelPages, ...blogIndexPages, ...blogPostPages]
 }

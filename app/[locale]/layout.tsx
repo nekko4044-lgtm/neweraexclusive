@@ -41,12 +41,12 @@ export async function generateMetadata({
     title: s.title,
     description: s.description,
     alternates: {
-      canonical: `${BASE}/${locale}`,
+      canonical: `${BASE}/${locale}/`,
       languages: {
-        en: `${BASE}/en`,
-        ru: `${BASE}/ru`,
-        ar: `${BASE}/ar`,
-        'x-default': `${BASE}/en`,
+        en: `${BASE}/en/`,
+        ru: `${BASE}/ru/`,
+        ar: `${BASE}/ar/`,
+        'x-default': `${BASE}/en/`,
       },
     },
     openGraph: {
@@ -54,7 +54,7 @@ export async function generateMetadata({
       siteName: 'New Era Exclusive',
       title: s.title,
       description: s.description,
-      url: `${BASE}/${locale}`,
+      url: `${BASE}/${locale}/`,
       locale: locale === 'ar' ? 'ar_AE' : locale === 'ru' ? 'ru_RU' : 'en_US',
       images: [{ url: '/og.jpg', width: 1200, height: 630, alt: 'New Era Exclusive' }],
     },

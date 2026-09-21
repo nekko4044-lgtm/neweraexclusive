@@ -29,14 +29,14 @@ export async function generateMetadata({
     title: post.title,
     description: post.excerpt,
     alternates: {
-      canonical: `${BASE}/${locale}/blog/${slug}`,
+      canonical: `${BASE}/${locale}/blog/${slug}/`,
     },
     openGraph: {
       type: 'article',
       siteName: 'New Era Exclusive',
       title: post.title,
       description: post.excerpt,
-      url: `${BASE}/${locale}/blog/${slug}`,
+      url: `${BASE}/${locale}/blog/${slug}/`,
       publishedTime: post.date,
       locale: locale === 'ar' ? 'ar_AE' : locale === 'ru' ? 'ru_RU' : 'en_US',
     },
