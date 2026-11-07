@@ -54,62 +54,31 @@ export default function About() {
         <span className="font-body text-[9px] uppercase tracking-[0.35em] text-gold/25 whitespace-nowrap">{t('eyebrow')}</span>
       </div>
 
-      <div className="max-w-6xl mx-auto grid md:grid-cols-[1fr_1.2fr] gap-10 md:gap-16 items-start">
-
-        {/* LEFT — team photo */}
-        <div ref={r1} className="reveal relative aspect-[3/4] overflow-hidden rounded-2xl bg-stone md:sticky md:top-28">
-          <Image
-            src="/ksenia-bulgakova.webp"
-            alt={t('portraitAlt')}
-            fill
-            className="object-cover object-top"
-            sizes="(max-width: 768px) 100vw, 45vw"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-ink/15" />
+      <div className="max-w-6xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-stretch">
+          <div ref={r1} className="reveal relative aspect-[3/4] lg:aspect-auto lg:min-h-[620px] overflow-hidden rounded-2xl bg-stone">
+            <Image src="/ksenia-bulgakova.webp" alt={t('portraitAlt')} fill className="object-cover object-top" sizes="(max-width: 1023px) 100vw, 45vw" />
+          </div>
+          <div ref={r2} className="reveal flex flex-col justify-center gap-6 lg:py-3">
+            <div>
+              <h2 className="font-display text-[clamp(2rem,3.6vw,3.2rem)] font-light leading-[1.1] text-cream">{t('headline')}</h2>
+              <p className="font-body text-xs text-gold/80 leading-relaxed mt-4">{t('role')}<br /><bdi dir="ltr" className="inline-block mt-1">NEW ERA INTERIOR DESIGN WORK</bdi></p>
+            </div>
+            <div className="flex flex-col gap-4">
+              {t('body').split('\n').map((para, i) => <p key={i} className="font-body font-light text-cream/75 text-[15px] leading-[1.8]">{para}</p>)}
+            </div>
+            <p className="font-body text-[15px] leading-[1.8] text-cream/95 font-medium">{t('responsibility')}</p>
+            <div>
+              <p className="font-body text-sm italic text-cream/60">{t('regards')}</p>
+              <p className="font-display text-xl text-cream mt-1">{t('headline')}</p>
+              <p dir="ltr" className="font-display text-xl italic text-gold/80 mt-4">From Vision to Perfection</p>
+            </div>
+          </div>
         </div>
-
-        {/* RIGHT — text */}
-        <div className="flex flex-col justify-center gap-10">
-          <div ref={r2} className="reveal flex flex-col gap-6">
-            <div className="flex items-center gap-3">
-              <div className="w-6 h-[1px] bg-gold/50" />
-              <span className="font-body text-[11px] uppercase tracking-[0.25em] text-gold/70">{t('eyebrow')}</span>
-            </div>
-
-            <h2 className="font-display text-[clamp(2rem,4.5vw,3.2rem)] font-light leading-[1.1] text-cream">
-              {t('headline')}
-            </h2>
-
-            <p className="font-body text-[11px] uppercase tracking-[0.16em] text-gold/80 leading-relaxed">{t('role')}<br /><span dir="ltr" className="inline-block mt-2">NEW ERA INTERIOR DESIGN WORK</span></p>
-            <p className="font-body text-[16px] leading-[1.8] text-cream/85">{t('intro').split('NEW ERA INTERIOR DESIGN WORK').map((part, i) => <span key={i}>{i > 0 && <bdi dir="ltr">NEW ERA INTERIOR DESIGN WORK</bdi>}{part}</span>)}</p>
-            <div className="flex flex-col gap-5">
-              {t('body').split('\n').map((para, i) => (
-                <p key={i} className="font-body font-light text-cream/65 text-[15px] leading-[1.8]">
-                  {para}
-                </p>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-5 font-body text-[15px] leading-[1.8]">
-            <p className="text-cream/90 font-medium border-s-2 border-gold/50 ps-5">{t('responsibility')}</p>
-            <p className="text-cream/65 font-light">{t('belief')}</p>
-            <p className="text-cream/90 font-medium">{t('closing')}</p>
-            <div className="pt-3">
-              <p className="italic text-cream/50 text-sm">{t('regards')}</p>
-              <p className="font-display text-2xl text-cream mt-2">{t('headline')}</p>
-              <p className="text-xs text-gold/70 mt-2">{t('signatureRole')}</p>
-            </div>
-            <p dir="ltr" className="font-display text-xl italic text-gold/80 pt-4">From Vision to Perfection</p>
-          </div>
-
-          {/* NDA note */}
-          <p className="font-body text-[13px] italic text-cream/80 leading-relaxed -mt-4">
-            {t('nda')}
-          </p>
+        <p className="font-body text-[13px] italic text-cream/65 leading-relaxed text-center max-w-2xl mx-auto mt-8">{t('nda')}</p>
 
           {/* Stats — editorial strip */}
-          <div ref={r3} className="reveal relative">
+          <div ref={r3} className="reveal relative mt-12 lg:mt-16">
             {/* Top/bottom gold hairlines */}
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent" />
@@ -120,7 +89,7 @@ export default function About() {
                 { value: 20,  suffix: '+', label: t('stat2'), sub: t('stat2desc') },
                 { value: 4,   suffix: '',  label: t('stat3'), sub: t('stat3desc') },
               ] as const).map((stat, i) => (
-                <div key={i} className="py-6 px-4 md:px-6 flex flex-col gap-1.5">
+                <div key={i} className="py-8 px-2 md:px-6 flex flex-col items-center text-center gap-1.5">
 
                   {/* Number + suffix */}
                   <div className="flex items-start gap-0.5 leading-none">
@@ -136,10 +105,10 @@ export default function About() {
 
                   {/* Label + sub */}
                   <div className="flex flex-col gap-1 mt-2">
-                    <span className="font-body text-[11px] uppercase tracking-[0.2em] text-cream/50 leading-tight">
+                    <span className="font-body text-[10px] md:text-[11px] uppercase tracking-[0.1em] md:tracking-[0.2em] text-cream/65 leading-tight">
                       {stat.label}
                     </span>
-                    <span className="font-body text-[11px] italic text-cream/30 leading-tight">
+                    <span className="font-body text-[11px] italic text-cream/50 leading-tight">
                       {stat.sub}
                     </span>
                   </div>
@@ -148,7 +117,6 @@ export default function About() {
               ))}
             </div>
           </div>
-        </div>
       </div>
     </section>
   )
