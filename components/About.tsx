@@ -54,18 +54,18 @@ export default function About() {
         <span className="font-body text-[9px] uppercase tracking-[0.35em] text-gold/25 whitespace-nowrap">{t('eyebrow')}</span>
       </div>
 
-      <div className="max-w-6xl mx-auto grid md:grid-cols-[1fr_1.2fr] gap-16 md:gap-24 items-start">
+      <div className="max-w-6xl mx-auto grid md:grid-cols-[1fr_1.2fr] gap-10 md:gap-16 items-start">
 
         {/* LEFT — team photo */}
-        <div ref={r1} className="reveal relative aspect-[3/4] overflow-hidden rounded-2xl bg-stone">
+        <div ref={r1} className="reveal relative aspect-[3/4] overflow-hidden rounded-2xl bg-stone md:sticky md:top-28">
           <Image
-            src="/team.webp"
-            alt="New Era Exclusive Team"
+            src="/ksenia-bulgakova.webp"
+            alt={t('portraitAlt')}
             fill
             className="object-cover object-top"
             sizes="(max-width: 768px) 100vw, 45vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-ink/60" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-ink/15" />
         </div>
 
         {/* RIGHT — text */}
@@ -80,13 +80,27 @@ export default function About() {
               {t('headline')}
             </h2>
 
-            <div className="flex flex-col gap-3">
+            <p className="font-body text-[11px] uppercase tracking-[0.16em] text-gold/80 leading-relaxed">{t('role')}<br /><span dir="ltr" className="inline-block mt-2">NEW ERA INTERIOR DESIGN WORK</span></p>
+            <p className="font-body text-[16px] leading-[1.8] text-cream/85">{t('intro').split('NEW ERA INTERIOR DESIGN WORK').map((part, i) => <span key={i}>{i > 0 && <bdi dir="ltr">NEW ERA INTERIOR DESIGN WORK</bdi>}{part}</span>)}</p>
+            <div className="flex flex-col gap-5">
               {t('body').split('\n').map((para, i) => (
                 <p key={i} className="font-body font-light text-cream/65 text-[15px] leading-[1.8]">
                   {para}
                 </p>
               ))}
             </div>
+          </div>
+
+          <div className="flex flex-col gap-5 font-body text-[15px] leading-[1.8]">
+            <p className="text-cream/90 font-medium border-s-2 border-gold/50 ps-5">{t('responsibility')}</p>
+            <p className="text-cream/65 font-light">{t('belief')}</p>
+            <p className="text-cream/90 font-medium">{t('closing')}</p>
+            <div className="pt-3">
+              <p className="italic text-cream/50 text-sm">{t('regards')}</p>
+              <p className="font-display text-2xl text-cream mt-2">{t('headline')}</p>
+              <p className="text-xs text-gold/70 mt-2">{t('signatureRole')}</p>
+            </div>
+            <p dir="ltr" className="font-display text-xl italic text-gold/80 pt-4">From Vision to Perfection</p>
           </div>
 
           {/* NDA note */}

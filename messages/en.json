@@ -15,16 +15,24 @@
     "cta": "Start Your Project"
   },
   "about": {
-    "eyebrow": "Our Story",
-    "headline": "Over 20 Years of Excellence",
-    "body": "For over 20 years we have been crafting interiors that transcend time.\nOur team brings together architects, designers and engineers with international experience and education from Europe's leading design schools.\nWe manage the full cycle — from concept and engineering to construction, furnishing and final handover.\nFor us, an interior is not just design — it is an investment in quality of life, comfort and the owner's status.",
+    "eyebrow": "A word from our founder",
+    "headline": "Ksenia Bulgakova",
+    "body": "For more than 20 years, my professional life has centred on construction, architecture and interior design. This experience has taught me that true luxury goes beyond aesthetics: it lies in quality, comfort and the care behind every decision.\nI founded NEW ERA to bring architecture, design and construction together in one seamless process — where every detail matters, and every beautiful concept is supported by precise engineering and exceptional craftsmanship.\nToday, our team brings together architects, designers and engineers with international experience. We deliver projects from concept to completion, encompassing construction, furnishing and the handover of a fully finished space.",
     "stat1": "Projects Completed",
     "stat1desc": "across the UAE",
     "stat2": "Years of Expertise",
     "stat2desc": "in interior design",
     "stat3": "Years in Dubai",
     "stat3desc": "UAE market experience",
-    "nda": "By client agreement, all project photography is confidential. Portfolio available upon request."
+    "nda": "We respect our clients’ privacy. Photographs of completed projects are available on request, subject to the relevant confidentiality arrangements.",
+    "role": "Founder & CEO",
+    "intro": "My name is Ksenia Bulgakova, and I am the founder and CEO of NEW ERA INTERIOR DESIGN WORK.",
+    "responsibility": "For me, every project begins with trust and a personal commitment to the result.",
+    "belief": "I believe a space should do more than impress. It should express its owner’s individuality, complement their way of life and remain relevant for years to come.",
+    "closing": "NEW ERA is more than interiors. It is quality of life, expressed in every detail.",
+    "regards": "Warm regards,",
+    "signatureRole": "Founder & CEO, NEW ERA",
+    "portraitAlt": "Ksenia Bulgakova, Founder and CEO of NEW ERA"
   },
   "services": {
     "eyebrow": "What We Do",
