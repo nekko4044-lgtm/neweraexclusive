@@ -295,13 +295,21 @@ export default function CatalogPage() {
     <div className="relative">
       {/* ── Fixed video background — always behind everything ── */}
       <div className="fixed top-0 left-0 w-full h-[100svh] overflow-hidden z-0">
+        <picture className="absolute inset-0 block">
+          <source media="(max-width: 767px)" srcSet="/catalog/hero-poster-mobile.webp" />
+          <img src="/catalog/hero-poster.webp" alt="" fetchPriority="high" loading="eager" className="h-full w-full object-cover" />
+        </picture>
         {videoSrc && (
           <video
             key={videoSrc}
             ref={videoRef}
             src={videoSrc}
             autoPlay muted playsInline preload="auto"
-            className="absolute inset-0 w-full h-full object-cover"
+            poster={isMobile ? '/catalog/hero-poster-mobile.webp' : '/catalog/hero-poster.webp'}
+            onPlaying={(event) => { event.currentTarget.style.opacity = '1' }}
+            onError={(event) => { event.currentTarget.style.opacity = '0' }}
+            style={{ opacity: 0 }}
+            className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
           />
         )}
 

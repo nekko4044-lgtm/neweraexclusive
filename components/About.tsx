@@ -41,7 +41,6 @@ function Counter({ target, suffix = '' }: { target: number; suffix?: string }) {
 
 export default function About() {
   const t = useTranslations('about')
-  const r1 = useReveal(0)
   const r2 = useReveal(150)
   const r3 = useReveal(300)
 
@@ -56,8 +55,8 @@ export default function About() {
 
       <div className="max-w-6xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-stretch">
-          <div ref={r1} className="reveal relative aspect-[3/4] lg:aspect-auto lg:min-h-[620px] overflow-hidden rounded-2xl bg-stone">
-            <Image src="/ksenia-bulgakova.webp" alt={t('portraitAlt')} fill className="object-cover object-top" sizes="(max-width: 1023px) 100vw, 45vw" />
+          <div className="relative aspect-[3/4] lg:aspect-auto lg:min-h-[620px] overflow-hidden rounded-2xl bg-stone">
+            <Image src="/ksenia-bulgakova.webp" alt={t('portraitAlt')} priority fill className="object-cover object-top" sizes="(max-width: 1023px) 100vw, 45vw" />
           </div>
           <div ref={r2} className="reveal flex flex-col justify-center gap-5 lg:py-2">
             <div>

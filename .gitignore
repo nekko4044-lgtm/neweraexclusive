@@ -15,3 +15,7 @@ CLAUDE.md
 # Local Netlify folder
 .netlify/
 .vercel
+
+# Catalog background videos are required production assets
+!public/videos/hero-desktop.mp4
+!public/videos/hero-mobile-lite.mp4
