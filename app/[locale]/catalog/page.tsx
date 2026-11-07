@@ -357,7 +357,7 @@ export default function CatalogPage() {
 
         {/* Breadcrumb */}
         <nav
-          className="absolute top-28 md:top-32 ltr:left-6 rtl:right-6 md:ltr:left-16 md:rtl:right-16 flex items-center gap-2 font-body text-[14px] uppercase tracking-[0.2em] text-cream/40"
+          className="absolute z-10 top-28 md:top-32 ltr:left-6 rtl:right-6 md:ltr:left-16 md:rtl:right-16 flex items-center gap-2 font-body text-[14px] uppercase tracking-[0.2em] text-cream/40"
           style={{ textShadow: '0 1px 8px rgba(0,0,0,0.8)' }}
         >
           <Link href={`/${locale}`} className="hover:text-gold/80 transition-colors duration-300">
@@ -368,7 +368,7 @@ export default function CatalogPage() {
         </nav>
 
         {/* Hero content — title at bottom */}
-        <div className="absolute inset-0 flex flex-col justify-end px-6 md:px-16 pb-16 md:pb-24">
+        <div className="absolute inset-0 pointer-events-none flex flex-col justify-end px-6 md:px-16 pb-16 md:pb-24">
           <div
             ref={titleRef}
             className="flex flex-col gap-5 transition-none will-change-[opacity,transform]"

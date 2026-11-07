@@ -41,6 +41,13 @@ function Counter({ target, suffix = '' }: { target: number; suffix?: string }) {
 
 export default function About() {
   const t = useTranslations('about')
+  const [dubaiYears, setDubaiYears] = useState(5)
+
+  useEffect(() => {
+    // Five years in 2026; advance by calendar year in Dubai, without a rebuild.
+    const year = Number(new Intl.DateTimeFormat('en', { year: 'numeric', timeZone: 'Asia/Dubai' }).format(new Date()))
+    setDubaiYears(5 + Math.max(0, year - 2026))
+  }, [])
   const r2 = useReveal(150)
   const r3 = useReveal(300)
 
@@ -88,7 +95,7 @@ export default function About() {
               {([
                 { value: 150, suffix: '+', label: t('stat1'), sub: t('stat1desc') },
                 { value: 20,  suffix: '+', label: t('stat2'), sub: t('stat2desc') },
-                { value: 4,   suffix: '',  label: t('stat3'), sub: t('stat3desc') },
+                { value: dubaiYears, suffix: '', label: t('stat3', { count: dubaiYears }), sub: t('stat3desc') },
               ] as const).map((stat, i) => (
                 <div key={i} className="py-8 px-2 md:px-6 flex flex-col items-center text-center gap-1.5">
 

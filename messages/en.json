@@ -22,7 +22,7 @@
     "stat1desc": "across the UAE",
     "stat2": "Years of Expertise",
     "stat2desc": "in interior design",
-    "stat3": "Years in Dubai",
+    "stat3": "{count, plural, one {Year in Dubai} other {Years in Dubai}}",
     "stat3desc": "UAE market experience",
     "nda": "We respect our clients’ privacy. Photographs of completed projects are available on request, subject to the relevant confidentiality arrangements.",
     "role": "Founder and CEO",

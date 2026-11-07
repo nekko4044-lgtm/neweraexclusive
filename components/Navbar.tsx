@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import Link from 'next/link'
 import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 
 const locales = [
   { code: 'en', label: 'EN' },
@@ -14,6 +15,8 @@ const locales = [
 export default function Navbar() {
   const t      = useTranslations('nav')
   const locale = useLocale()
+  const pathname = usePathname()
+  const sectionHref = (id: string) => pathname.replace(/\/$/, '') === `/${locale}` ? `#${id}` : `/${locale}/#${id}`
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen]         = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
@@ -37,10 +40,10 @@ export default function Navbar() {
   }, [open])
 
   const links = [
-    { href: '#about',    label: t('about'),    external: false },
-    { href: '#services', label: t('services'), external: false },
-    { href: '#why',      label: t('why'),      external: false },
-    { href: '#contact',  label: t('contact'),  external: false },
+    { href: sectionHref('about'),    label: t('about'),    external: false },
+    { href: sectionHref('services'), label: t('services'), external: false },
+    { href: sectionHref('why'),      label: t('why'),      external: false },
+    { href: sectionHref('contact'),  label: t('contact'),  external: false },
     { href: `/${locale}/blog`,    label: t('blog'),    external: true },
     { href: `/${locale}/catalog`, label: t('catalog'), external: true },
   ]
@@ -66,6 +69,8 @@ export default function Navbar() {
           onClick={() => setOpen(!open)}
           className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/15 hover:border-gold/30 transition-all duration-300"
           aria-label="Menu"
+          aria-expanded={open}
+          aria-controls="site-menu"
         >
           <span className="font-body text-[11px] uppercase tracking-[0.2em] text-cream/60">
             {open ? 'Close' : 'Menu'}
@@ -78,7 +83,7 @@ export default function Navbar() {
       </nav>
 
       {/* Floating card dropdown */}
-      <div className={`
+      <div id="site-menu" aria-hidden={!open} className={`
         absolute top-[calc(100%+8px)] w-64
         rounded-2xl border border-white/10
         bg-stone/95 backdrop-blur-2xl
