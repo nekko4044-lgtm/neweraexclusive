@@ -59,15 +59,17 @@ export default function About() {
           <div ref={r1} className="reveal relative aspect-[3/4] lg:aspect-auto lg:min-h-[620px] overflow-hidden rounded-2xl bg-stone">
             <Image src="/ksenia-bulgakova.webp" alt={t('portraitAlt')} fill className="object-cover object-top" sizes="(max-width: 1023px) 100vw, 45vw" />
           </div>
-          <div ref={r2} className="reveal flex flex-col justify-center gap-6 lg:py-3">
+          <div ref={r2} className="reveal flex flex-col justify-center gap-5 lg:py-2">
             <div>
               <h2 className="font-display text-[clamp(2rem,3.6vw,3.2rem)] font-light leading-[1.1] text-cream">{t('headline')}</h2>
-              <p className="font-body text-xs text-gold/80 leading-relaxed mt-4">{t('role')}<br /><bdi dir="ltr" className="inline-block mt-1">NEW ERA INTERIOR DESIGN WORK</bdi></p>
+              <p className="font-body text-xs text-gold/80 leading-relaxed mt-4"><bdi dir="ltr">{t('role')}</bdi><br /><bdi dir="ltr" className="inline-block mt-1">NEW ERA INTERIOR DESIGN WORK</bdi></p>
             </div>
             <div className="flex flex-col gap-4">
               {t('body').split('\n').map((para, i) => <p key={i} className="font-body font-light text-cream/75 text-[15px] leading-[1.8]">{para}</p>)}
             </div>
-            <p className="font-body text-[15px] leading-[1.8] text-cream/95 font-medium">{t('responsibility')}</p>
+            <p className="font-body text-[15px] leading-[1.8] text-cream/95 font-medium border-s-2 border-gold/50 ps-5">{t('responsibility')}</p>
+            <p className="font-body font-light text-cream/75 text-[15px] leading-[1.8]">{t('belief')}</p>
+            <p className="font-body text-cream/90 text-[15px] leading-[1.8] font-medium">{t('closing')}</p>
             <div>
               <p className="font-body text-sm italic text-cream/60">{t('regards')}</p>
               <p className="font-display text-xl text-cream mt-1">{t('headline')}</p>
